@@ -1,0 +1,65 @@
+<!-- Hardwired SVG code with Vue looping over the data -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue with VSG test 2</title>
+
+    <!-- JavaScript -->
+    <script src="Vue2/vue2.js"></script>    <!-- Vue.js (version 2) -->
+</head>
+
+<body>
+
+
+<div id="vue-root">   <!-- Container for VUE COMPONENTS : the ROOT of the components below -->
+    <svg viewBox='0 0 200 400' xmlns='http://www.w3.org/2000/svg'>
+        <circle v-for='pnt in all_points'
+                v-bind:cx='pnt[0]' v-bind:cy='pnt[1]'
+                r='2' stroke='green' stroke-width='1' fill="white"
+        />
+    </svg>
+</div>	<!--  ~~~~~~~~~~~~~~~~~~~~~  END of Vue root element  ~~~~~~~~~~~~~~~~~~~~~  -->
+
+
+
+
+<!--
+    Vue components (and other JS).  This must appear AFTER the Vue-containing elements
+  -->
+<script src="../SVG_plot/svg-plot.js"></script>
+
+
+<script>
+// Instantiation must come after the component definition
+new Vue({
+    el: '#vue-root',
+
+    delimiters: ['[[', ']]'] ,  // Changing delimiters: requesting double SQUARE brackets, to avoid interfering with Flask
+
+    data: {
+        all_points: [
+                        [30, 10],
+                        [80, 30]
+                    ]
+    },
+
+
+    // ---------------------  METHODS  ----------------------
+
+    methods:  {
+        foo()
+        //
+        {
+
+        }
+
+    } // METHODS
+
+});
+</script>
+
+
+</body>
+</html>

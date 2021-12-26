@@ -111,6 +111,7 @@ let result = x_scaling.transform(0.01);
 console.log(result);
 */
 
+/*
 let plot = new SVGplot(200, 400);
 
 svg_code = plot
@@ -120,5 +121,6 @@ svg_code = plot
     .terminate_plot();
 
 console.log(svg_code);
+*/
 
 
