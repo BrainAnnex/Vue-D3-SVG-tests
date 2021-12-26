@@ -1,0 +1,246 @@
+<!-- Test WITHOUT Vue -->
+<!DOCTYPE html>
+<html>
+<head>
+<title>NO Vue</title>
+<meta charset="iso-8859-1">
+
+<style>
+table, th, td {
+  border: 1px solid black;
+}
+table {
+  border-collapse: collapse;
+}
+td {
+	padding:6px;
+}
+</style>
+
+</head>
+
+<body>
+
+
+
+<script type="text/javascript">
+var choices = ["La", "vispa", "Teresa", "volava", "fra", "l'erbetta", "gentil"];
+var selection_status = [false, false, true, false, false, false, false];
+</script>
+
+
+
+
+<div>
+
+<b>Vanilla JavaScript version</b><br>
+
+<ul id="selections">
+
+
+<script type="text/javascript">
+<!-- This is the VIEW : it creates a UI list based on the JS array "choices" -->
+const UL_Element = document.getElementById("selections");		// Locate the UL to be populated with the individual entries
+
+numberItems = choices.length;
+
+// Loop over all list choices
+for (let i = 0; i < numberItems; i++) {
+	
+	if (choices[i] === undefined)
+		continue;			// Skip over "holes" in the array "choices"
+	
+	// Create a new <LI> element with all its parts
+	LI_Element = createListingEntry(i);
+	
+	
+	// Append the newly-created LI element to the UL list being constructed
+	UL_Element.appendChild(LI_Element);
+}
+
+
+
+function createListingEntry(i)
+// Create and return a single entry (line) for the listing of choices
+{
+	// Create a <LI> element
+    let LI_Element = document.createElement('li');
+	// Give it a unique ID
+	LI_Element.id = "li_entry_" + i;
+	// Give it some text
+	LI_Element.innerText = choices[i];		// or .textContext
+	
+	
+	// Create a checkbox (<INPUT> element)
+	let checkbox_Element = document.createElement('input');
+	checkbox_Element.type = "checkbox";
+	checkbox_Element.setAttribute( 'onclick' , 'clickCheckbox(' + i + ')' );
+	//checkbox_Element.onclick = function(){ clickCheckbox(i); } ;		// Alternate way
+	
+	if(selection_status[i])  {
+		checkbox_Element.checked = true;
+		LI_Element.style.color = "red";
+	}
+	else
+		LI_Element.style.color = "black";
+	
+	// Append the checkbox at the end of the LI element under consideration
+	LI_Element.appendChild(checkbox_Element);
+	
+	
+	// Create a link (<A> element)
+	let link_Element = document.createElement('a');
+	link_Element.innerText = "x";
+	link_Element.href = "javascript:deleteEntry(" + i + ")";
+	
+	// Append the link at the end of the LI element under consideration
+	LI_Element.appendChild(link_Element);
+
+	return LI_Element;
+}
+
+
+
+
+function clickCheckbox(i)
+// Invoked whenever the i-th checkbox is clicked on
+{
+	//alert("In clickCheckbox(): i = " + i);
+	console.log("In clickCheckbox(): i = " + i);
+	
+	
+	/* UPDATE THE MODEL
+	 */
+	selection_status[i] = ! selection_status[i];	// Flip the Boolean element
+	console.log(selection_status);
+	
+	
+	/* UPDATE THE VIEW
+	 */
+	const LI_Element = document.getElementById("li_entry_" + i);
+	if (LI_Element.style.color == "red")
+		LI_Element.style.color = "black";
+	else
+		LI_Element.style.color = "red";
+}
+
+
+function deleteEntry(i)
+// Zap the i-th entry of the "choices" dataset, and correspondingly update all views
+{
+	//alert("In deleteEntry(): i = " + i);
+	console.log("In deleteEntry(): i = " + i);
+	
+	
+	/* UPDATE THE MODEL
+	 */
+	delete choices[i];           // Changes the i-th element in array choices to undefined 
+	delete selection_status[i];
+	
+	console.log(choices);
+
+
+	/* UPDATE THE VIEWS
+	 */
+	const LI_Element = document.getElementById("li_entry_" + i);	// Locate the LI element to be deleted
+	LI_Element.remove();											// Remove it from the DOM
+	
+	const TD_Element = document.getElementById("td_entry_" + i);	// Locate the TD element to be deleted
+	TD_Element.remove();											// Remove it from the DOM
+}
+
+
+function addNewEntry(formObject)
+// Invoked whenever a new value is entered in the form
+{
+	//console.log(formObject);
+	const new_value = formObject.new_entry.value
+	//alert("In addNewEntry(): new_value = " + new_value);
+	console.log("In addNewEntry(): new_value = " + new_value);
+		
+	
+	/* UPDATE THE MODEL
+	 */
+	choices.push(new_value);
+	selection_status.push(false);
+	
+	console.log(choices);
+	console.log(selection_status);
+	
+	
+	/* UPDATE THE VIEWS
+	 */
+	numberCurrentEntries = choices.length;
+		
+	const UL_Element = document.getElementById("selections");	// Locate the UL element to be appended to
+	LI_Element = createListingEntry(numberCurrentEntries - 1);
+	// Append the newly-created LI element to the UL list
+	UL_Element.appendChild(LI_Element);
+	
+	
+	const TR_Element = document.getElementById("single_row");	// Locate the TR element to be appended to
+	TD_Element = createTableCell(numberCurrentEntries - 1);
+	// Append the newly-created TD element to the TR
+	TR_Element.appendChild(TD_Element);
+}
+
+</script>
+
+</ul>
+
+<br>
+
+<form id="add_button"  method='POST'>
+<input type="text" name="new_entry">
+<input type='button' value='Add to list' onClick='addNewEntry(this.form)'>
+
+</form>
+
+</ul>
+</div>
+
+
+
+<div id='summary'>
+<h3>Available choices:</h3>
+<table>
+<tr id='single_row'>
+<script type="text/javascript">
+<!-- This is the VIEW : it creates a UI table with one row, based on the JS array "choices" -->
+const TR_Element = document.getElementById("single_row");		// Locate the table row to be populated with the individual entries
+
+numberItems = choices.length;
+
+// Loop over all list choices
+for (let i = 0; i < numberItems; i++) {
+	
+	if (choices[i] === undefined)
+		continue;			// Skip over "holes" in the array "choices"
+	
+	// Create a new <TD> element with all its parts
+	TD_Element = createTableCell(i);
+	
+	
+	// Append the newly-created TD element to the TR being constructed
+	TR_Element.appendChild(TD_Element);
+}
+
+
+function createTableCell(i) 
+{
+	// Create a <TD> element
+    let TD_Element = document.createElement('td');
+	// Give it a unique ID
+	TD_Element.id = "td_entry_" + i;
+	// Give it some text
+	TD_Element.innerText = choices[i];	
+	
+	return TD_Element;
+}
+</script>
+</tr>
+</table>
+</div>
+
+</body>
+</html>

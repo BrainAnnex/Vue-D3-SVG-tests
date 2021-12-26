@@ -1,0 +1,32 @@
+<!--  From https://www.youtube.com/watch?v=2J7O6rTDhtg -->
+<!DOCTYPE html>
+<html>
+<head>
+<title>Test 1</title>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+</head>
+
+<body>
+
+<div id="app">
+  {{ message }}
+  <br>
+  <input type="text" v-model="message">
+</div>
+
+<script>
+// This must appear AFTER the element
+var app = new Vue({
+  el: '#app',
+  data: {
+    message: 'Hello World!'
+  }
+})
+</script>
+
+
+</body>
+</html>

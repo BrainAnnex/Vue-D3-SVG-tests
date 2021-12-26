@@ -1,0 +1,125 @@
+<!--  From https://www.youtube.com/watch?v=ssK5dxY6vfY and https://www.youtube.com/watch?v=bzTuThO3ZRw -->
+<!DOCTYPE html>
+<html>
+<head>
+<title>Test 3</title>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<style>
+	.red-text {
+		color: red;
+	}
+	.blue-text {
+		color: blue;
+	}
+	.green-text {
+		color: green;
+	}
+	div.box {
+		border:1px solid gray;
+		padding:3px;
+		margin-top:15px;
+	}
+</style>
+
+</head>
+
+<body>
+
+<div id="app">
+  {{ count }}	<!-- Using an Expression -->
+  
+  <br><br>
+  <!-- Using directives -->
+  <button v-on:click="count++"><span v-bind:class="textColor">+</span></button>		<!-- Binding CSS classes with directives -->
+  <button @click="count--"><span :class="textColor">-</span></button>				<!-- Short form of finding CSS classes with directives -->
+  <button @click="invert">1/x</button>
+  <button v-if="scientific">E</button>								<!-- Conditional rendering -->
+  
+  <div style="margin-top:10px">
+  <button @click="textColor='blue-text'">Blue text</button>			<!-- Inline function -->
+  <button @click="setColorToRed">Red text</button>					<!-- Function with no argument-->
+  <button @click="setColor('green-text')">Green text</button>		<!-- Function with argument-->
+  </div>
+  
+  <br>
+  <span :title="message">
+  Hover your mouse over me for a few seconds to see my dynamically bound title!
+  </span>
+  
+  	<div class="box">
+      <button v-if="details" @click="details=false">Hide</button>
+      <button v-if="!details" @click="details=true">Show</button>
+      <p v-if="details" style="margin-top:10px">
+      Blah blah blah
+ 	 </div>
+  
+   	<div class="box">
+      <button v-if="details_2" @click="details_2=false">Hide</button>
+      <button v-if="!details_2" @click="details_2=true">Show</button>
+      <p v-if="details_2" style="margin-top:10px">
+      Another set of details
+  	</div>
+  
+	<div class="box">
+  		<button @click="tab = 1">Tab 1</button>
+        <button @click="tab = 2">Tab 2</button>
+        
+        <div v-if="tab == 1">
+        	Contents of Tab 1
+        </div>
+        <div v-else-if="tab == 2">
+        	Contents of Tab 2
+        </div>
+        <div v-else>
+        	Choose Tab!
+        </div>
+	</div>
+    
+    
+    <div class="box">
+    <span v-html="my_html"></span>
+    </div>
+  
+</div>
+
+<script>
+// This must appear AFTER the element
+var app = new Vue({
+	el: '#app',
+	
+	data: {
+		count: 0,	// Can be accessed in console as:  app.count
+		textColor: "blue-text",
+		message: 'You loaded this page on ' + new Date().toLocaleString(),
+		scientific: true,
+		details: true,
+		details_2: true,
+		tab: 0,
+		my_html: "<b>This is some <i>HTML</i> text</b>"
+	},
+	
+	methods: {
+	
+		invert() {
+			console.log("In invert(): this.count = " + this.count);
+			this.count = 1. / this.count;
+			this.textColor = "red-text";
+		},
+		
+		setColorToRed() {
+			this.textColor = "red-text";
+		},
+		
+		setColor(color) {
+			this.textColor = color;
+		}
+		
+	}
+})
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!--  From https://www.youtube.com/watch?v=zDtlie_Vl2I -->
+<!DOCTYPE html>
+<html>
+<head>
+<title>Test 2</title>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+</head>
+
+<body>
+
+<div id="app">
+  {{ count }}	<!-- Using an Expression -->
+  <br><br>
+  <!-- Vue Events using directives -->
+  <button v-on:click="count++">+</button>
+  <button @click="count--">-</button>
+  <button @click="invert">1/x</button>     				<!-- Function with no argument -->
+  <button @click="power(2)">x<sup>2</sup></button>  	<!-- Function with argument -->
+</div>
+
+
+<script>
+// This must appear AFTER the "app" element
+var app = new Vue({
+	el: '#app',
+	
+	data: {
+		count: 0	// Can be accessed in console as:  app.count
+	},
+	
+	methods: {
+	
+		invert() {
+			console.log("In invert(): this.count = " + this.count);
+			this.count = 1. / this.count;
+		},
+		
+		power(exponent) {
+			console.log("In power(): this.count = " + this.count);
+			this.count = this.count ** exponent;
+		}
+		
+	} // End methods
+});
+</script>
+
+
+</body>
+</html>

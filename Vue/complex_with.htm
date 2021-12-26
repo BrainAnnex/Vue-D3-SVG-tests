@@ -1,0 +1,123 @@
+<!-- Test WITH Vue -->
+<!DOCTYPE html>
+<html>
+<head>
+<title>YES Vue</title>
+<meta charset="iso-8859-1">
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<style>
+table, th, td {
+  border: 1px solid black;
+}
+table {
+  border-collapse: collapse;
+}
+td {
+	padding:6px;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="app">
+<b>VUE VERSION</b>. Available choices:  {{ choices }}
+
+
+<ul>
+	<li v-for='(item, index) in choices'>
+    	<span v-if="selection_status[index]" style="color:red">
+        {{item}}
+        </span>
+        <span v-else style="color:black">
+        {{item}}
+        </span>
+        <input v-if="selection_status[index]" v-on:click="clickCheckbox(index)" type="checkbox" checked>
+        <input v-else                         v-on:click="clickCheckbox(index)" type="checkbox">
+        <a v-on:click.prevent="deleteEntry(index)"  href="#">x</a>
+    </li>
+</ul>
+
+<input type="text"  v-model="choiceToAdd">
+<button v-bind:disabled="!choiceToAdd" @click="addNewEntry">Add to list</button>
+
+<div>
+<h3>Available choices:</h3>
+<table>
+<tr>
+<td v-for='item in choices'>{{item}}</td>
+</tr>
+</table>
+</div>
+
+
+</div>  <!-- End of VUE template -->
+
+
+
+
+
+<script>
+// This Vue instance must appear AFTER the Vue template
+var app = new Vue({
+	el: '#app',
+	
+	data: {
+		choices : ["La", "vispa", "Teresa", "volava", "fra", "l'erbetta", "gentil"],		// Can be accessed in console as:  app.choices
+		selection_status : [false, false, true, false, false, false, false],
+		choiceToAdd: null
+	},
+	
+	methods: {
+		
+		deleteEntry(i)
+		// Zap the i-th entry of the "choices" dataset
+		{
+			//alert("In deleteEntry(): i = " + i);
+			console.log("In deleteEntry(): i = " + i);
+			
+			/* UPDATE THE MODEL
+			 */
+			this.choices.splice(i, 1);
+			this.selection_status.splice(i, 1);
+		},
+
+
+		clickCheckbox(i)
+		// Invoked whenever the i-th checkbox is clicked on
+		{
+			//alert("In clickCheckbox(): i = " + i);
+			console.log("In clickCheckbox(): i = " + i);
+			
+			/* UPDATE THE MODEL
+			 */
+			const currentStatus = this.selection_status[i];
+			this.selection_status.splice(i, 1, !currentStatus);		// Modify the array stored in the Vue property "selection_status" so as to replace the i-th element with its flipped version
+			console.log(this.selection_status);
+		},
+		
+		
+		addNewEntry()
+		// Invoked whenever a new value is entered in the form
+		{
+			const new_value = this.choiceToAdd;
+			//alert("In addNewEntry().  Entry to be added: `" + this.choiceToAdd + "`");
+			console.log("In addNewEntry().  Entry to be added: `" + new_value + "`");
+			
+			/* UPDATE THE MODEL
+			 */
+			this.choices.push(new_value);
+       		this.choiceToAdd = null;
+		}
+		
+	}
+})
+</script>
+
+
+</body>
+</html>

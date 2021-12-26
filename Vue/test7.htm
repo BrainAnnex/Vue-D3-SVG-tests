@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Test 7</title>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<style>
+div.sidebox {
+	padding:20px;
+	width:30%;
+	border:1px solid gray;
+	background-color:#EEEEFF;
+}
+div.sidebox_minimized {
+	width:8%;
+	border:1px solid gray;
+	background-color:#EEEEFF;
+}
+</style>
+
+
+</head>
+
+<body>
+
+
+<div id="app">	<!-- Start of Vue container -->
+
+<div v-if="showSidebox" class='sidebox'>
+<button v-on:click="showSidebox = false">Minimize Icon</button>
+<br>
+SOME STUFF<br>
+MORE STUFF
+</div>
+
+<div v-if="!showSidebox" class='sidebox_minimized'>
+<button v-on:click="showSidebox = true">Restore</button>
+
+</div>
+
+</div>		<!-- End of Vue container -->
+
+
+
+<script>
+// This must appear AFTER the Vue-containing element
+var app = new Vue({
+	el: '#app',
+  
+  data: {
+		showSidebox: true,
+		recordID: null,	// ID of the overall Content Item, of plugin type "record" 
+		structureID: null,
+		structureName: null,
+		allFields: [ ],	// Array of Records.  Each field is an object containing the fields: 
+						//					    		fieldID, header, value, value_original, itemType, itemID, 
+						//								edit, status, status_class
+						//						Note: value indicates the literal data.  edit is a boolean indicating editing mode
+					
+		newHeader: null,
+		newValue: null
+		
+  	}, // end of "data"
+  
+  
+  	// ------------- METHODS --------------
+	methods: {
+			
+		save(field)
+		// Update the content of a field
+		{
+			//alert(`fieldID = ${field.fieldID} | itemType = ${field.itemType} | itemID = ${field.itemID} | value = ${field.value} | value_original = ${field.value_original}`);		
+			success = contactServer_edit(this.recordID, field.fieldID, field.itemType, field.itemID, field.value);
+			if (success)  {
+				field.status_class = "success";
+				field.status = "Saved successfully";
+			}
+			else  {
+				field.status_class = "failure";
+				field.status = "Operation failed. The server was unable to save the change";
+				field.value = field.value_original;
+			}
+				
+			field.edit = false;	// Exit editing for this field
+
+		} // save()
+		,
+		
+		addNewField()
+		// Add a new field.  Its header and value are picked up from, respectively, the values of this.newHeader and this.newValue
+		{
+			result = contactServer_add(this.recordID, this.newHeader, this.newValue);
+			
+			if(result == false)  {
+				alert("Operation failed");
+				return;
+			}
+			
+			
+			//alert("In addNewField()");
+			const newField = {
+				recordID: this.recordID,
+				fieldID: result,
+				header: this.newHeader,
+				itemType: null,
+				itemID: null,
+				value: this.newValue,
+				value_original: this.newValue,
+				edit: false, 
+				status: "New field created successfully", 
+				status_class: "success"
+			};
+			// Append the new field to the record
+			this.allFields.push(newField);
+			
+			// Clear the form
+			this.newHeader = null;
+			this.newValue = null;
+			
+		} // addNewField()
+
+		
+	}, // end of "methods"
+	
+	
+	// ------------- COMPUTED --------------
+    computed: {
+   
+        newFieldButtonText()
+		// Provide a dynamic text for the "Add new field" button, based on the state of the data entry
+		{
+            if (!this.newHeader && !this.newValue)
+				return "Enter Header and/or Value";
+			else if (!this.newValue)
+				return "Add a new header with a blank value";
+			else if (!this.newHeader)
+				return "Add a new field value without specifying a name for the header";
+			else
+				return "ADD";
+        }
+        
+    }	// end of "computed"
+	
+}) // end of "app"
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Test 6</title>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<style>
+table {
+	border-collapse: collapse;
+}
+th {
+	border: 1px solid black;
+	background-color:#CCC;
+}
+td {
+	border: 1px solid #BBB;
+	padding:4px;
+}
+td.header {
+	color:white;
+	background-color:#444;
+}
+span.success {
+	color:gray;
+}
+span.failure {
+	color:red;
+	font-weight:bold;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<div id="app">
+
+
+<ul>
+  <li v-for='record in allRecords'>{{record.value}}</li>
+</ul>
+
+
+  <br><br>
+  <table>
+  <tr>
+  <th>Header</th><th>Value</th><th>Item<br>Type</th><th>Item<br>ID</th><th>Field<br>ID</th><th>ACTION</th>
+  </tr>
+  <tr v-for='(record, index) in allRecords'>
+  	<td class="header">{{record.header}}</td>
+    
+    <td>
+    	<input v-if="record.edit" type="text" size="75" v-model="allRecords[index].value">
+        <span v-else>{{record.value}}</span>
+    </td>
+    
+    <td style="background-color:#EEE">
+    	<input v-if="record.edit" type="text" size="1" v-model="allRecords[index].itemType">
+        <span v-else>{{record.itemType}}</span>
+    </td>
+    
+    <td style="background-color:#EEE">
+    	<input v-if="record.edit" type="text" size="3" v-model="allRecords[index].itemID">
+        <span v-else>{{record.itemID}}</span>
+    </td>
+    
+    <td style="color:gray">{{record.fieldID}}</td>
+     
+    <td>
+    	<button v-if="record.edit"  v-on:click="save(record)">SAVE</button>
+        <button v-if="record.edit"  v-on:click="allRecords[index].value = allRecords[index].value_original ; record.edit = false ">Cancel</button>
+        <button v-else              v-on:click="record.edit = true">Edit</button>
+       
+    	<span v-if="record.status_class" v-bind:class="record.status_class">{{record.status}}</span>
+    </td>
+  </tr>
+  </table>
+</div>
+
+
+
+<script>
+// This must appear AFTER the element
+var app = new Vue({
+  el: '#app',
+  
+  data: {
+	allRecords: []
+  },
+  
+	methods: {
+			
+		save(record) {
+			//alert(`fieldID = ${record.fieldID} | itemType = ${record.itemType} | itemID = ${record.itemID} | value = ${record.value} | value_original = ${record.value_original}`);
+			success = contactServer(record.fieldID, record.itemType, record.itemID, record.value);
+			if (success)  {
+				record.status_class = "success";
+				record.status = "Saved successfully";
+			}
+			else  {
+				record.status_class = "failure";
+				record.status = "Operation failed. Server message: cannot connect to database";
+				record.value = record.value_original;
+			}
+				
+			record.edit = false;
+		}
+		
+	}
+})
+
+
+function contactServer(fieldID, itemType, itemID, value)
+{
+	//alert("About to contact the server");
+	if (fieldID == 2)
+		return false;
+		
+	return true;
+}
+</script>
+
+
+<script>
+const recs =
+[
+	{fieldID: 4, header: "year", itemType: "", itemID: "", value: "2017", value_original: "2017", edit: false, status: "", status_class: null}, 
+	{fieldID: 5, header: "teacher", itemType: "", itemID: "", value: "Felix J. Lockman", value_original: "Felix J. Lockman", edit: false, status: "", status_class: null}
+];
+
+app.allRecords = recs;
+
+</script>
+
+
+</body>
+</html>
