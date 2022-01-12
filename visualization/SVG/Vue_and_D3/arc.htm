@@ -1,0 +1,87 @@
+<!--
+     Based on https://www.youtube.com/watch?v=CkFktv0p3pw
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Arcs : Vue with SVG</title>
+
+    <!-- JavaScript -->
+    <script src="Vue2/vue2.js"></script>    <!-- Vue.js (version 2) -->
+
+    <style type="text/css">
+
+    </style>
+</head>
+
+<body>
+
+
+<div id="vue-root">   <!-- Container for VUE COMPONENTS below : ROOT element -->
+    Heart:<br>
+    <svg width="500" height="100">
+            <path fill="none"
+                  stroke="red"
+                  stroke-width="5"
+                  d="M 10,30
+                    A 20,20 0,0,1 50,30
+                    A 20,20 0,0,1 90,30
+                    Q 90,60 50,90
+                    Q 10,60 10,30 z"
+            />
+    </svg>
+
+    <br>
+    Single arc:<br>
+    <svg width="300" height="300">
+        <vue-arc
+                v-bind:inner_radius="inner_radius"
+                v-bind:outer_radius="outer_radius"
+                v-bind:corner_radius="corner_radius"
+                v-bind:start_angle="start_angle"
+                v-bind:end_angle="end_angle"
+                v-bind:color="color"
+        >
+        </vue-arc>
+    </svg>
+
+
+
+</div>	<!--  ~~~~~~~~~~~~~~~~~~~~~  END of Vue root element  ~~~~~~~~~~~~~~~~~~~~~  -->
+
+
+
+<!--
+    Vue components (and other JS).  This must appear AFTER the Vue-containing elements
+  -->
+<script src="Vue_components/arc.js"></script>
+
+
+<!--Alternatively, just import https://d3js.org/d3.v7.min.js -->
+<script src="https://cdn.jsdelivr.net/npm/d3-path@3"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3-shape@3"></script>
+
+
+
+<script>
+// Instantiation of the ROOT component must come after the definition of the descendant components
+new Vue({
+    el: '#vue-root',
+
+    data: {
+        inner_radius: 0,
+        outer_radius: 100,
+        corner_radius: 10,
+        start_angle: 0,
+        end_angle: 2,
+        color: "yellow"
+    }
+
+});
+</script>
+
+
+</body>
+</html>

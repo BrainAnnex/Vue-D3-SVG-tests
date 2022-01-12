@@ -1,0 +1,59 @@
+<!-- A series of dots, joined by segments or fitted with various curves.
+     Based on https://www.youtube.com/watch?v=CkFktv0p3pw
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dots & lines : Vue with SVG</title>
+
+    <!-- JavaScript -->
+    <script src="Vue2/vue2.js"></script>    <!-- Vue.js (version 2) -->
+
+    <!-- Note: the transition only works with Chrome or Opera, not FF -->
+    <style type="text/css">
+        path {
+            transition: all 500ms ease;
+        }
+    </style>
+</head>
+
+<body>
+
+
+<div id="vue-root">   <!-- Container for VUE COMPONENTS below : ROOT element -->
+
+    <vue-dots-lines>
+    </vue-dots-lines>
+
+</div>	<!--  ~~~~~~~~~~~~~~~~~~~~~  END of Vue root element  ~~~~~~~~~~~~~~~~~~~~~  -->
+
+
+
+<!--
+    Vue components (and other JS).  This must appear AFTER the Vue-containing elements
+  -->
+<script src="Vue_components/dots_lines.js"></script>
+
+<!--Alternatively, just import https://d3js.org/d3.v7.min.js -->
+<script src="https://cdn.jsdelivr.net/npm/d3-path@3"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3-shape@3"></script>
+
+
+
+<script>
+// Instantiation of the ROOT component must come after the definition of the descendant components
+new Vue({
+    el: '#vue-root',
+
+    data: {
+
+    }
+
+});
+</script>
+
+
+</body>
+</html>

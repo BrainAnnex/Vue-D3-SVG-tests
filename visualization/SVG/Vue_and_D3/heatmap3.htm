@@ -1,0 +1,75 @@
+<!-- Simple heatmap purely with D3
+     Based on heatmap2.htm, but with a hardwired small data set
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Heatmap 3 : Vue with SVG</title>
+
+    <!-- JavaScript -->
+    <script src="Vue2/vue2.js"></script>    <!-- Vue.js (version 2) -->
+
+</head>
+
+<body>
+
+
+<div id="vue-root">   <!-- Container for VUE COMPONENTS below : ROOT element -->
+
+    <vue-heatmap-a
+            v-bind:my_groups="my_groups"
+            v-bind:my_vars="my_vars"
+            v-bind:my_data="my_data"
+            v-bind:margins="margins"
+    >
+    </vue-heatmap-a>
+
+</div>	<!--  ~~~~~~~~~~~~~~~~~~~~~  END of Vue root element  ~~~~~~~~~~~~~~~~~~~~~  -->
+
+
+<br>
+<hr>
+
+<!--
+    Vue components (and other JS).  This must appear AFTER the Vue-containing elements
+  -->
+<script src="Vue_components/heatmap_comp_A.js"></script>
+<script src="../SVG_plot/svg-plot.js"></script>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://d3js.org/d3-scale.v3.min.js"></script>
+
+
+
+<script>
+// Instantiation of the ROOT component must come after the definition of the descendant components
+new Vue({
+    el: '#vue-root',
+
+    data: {
+
+        // Labels of row and columns
+        my_groups: ["A", "B", "C"],
+        my_vars: ["v1", "v2"],
+
+        // Data for the heatmap
+        my_data: [
+            { group: "A", variable: "v1", value: "30" },
+            { group: "A", variable: "v2", value: "95" },
+            { group: "B", variable: "v1", value: "37" },
+            { group: "B", variable: "v2", value: "50" },
+            { group: "C", variable: "v1", value: "96" },
+            { group: "C", variable: "v2", value: "13" }
+        ],
+
+        // Set the dimensions and margins of the graph
+        margins: {top: 30, right: 30, bottom: 30, left: 30}
+    }
+
+});
+</script>
+
+
+</body>
+</html>

@@ -1,3 +1,4 @@
+// 2 identical bar graphs, created in different ways using D3.js (without and with the extra library "d3-scale")
 // Based on https://www.youtube.com/watch?v=TOJ9yjvlapY
 
 const DATA_1 = [
@@ -11,7 +12,7 @@ const DATA_1 = [
 // -------------   First, using coordinate transformation computed by us:   ------------
 
 const container = d3.select('.svg1')
-    .classed('container', true)
+    .classed('container', true);
 
 const bars = container
     .selectAll('.bar')
@@ -30,15 +31,17 @@ const bars = container
 const xScale = d3.scaleBand()
     .domain(DATA_1.map( dp => dp.region ))
     .rangeRound([0, 250])
-    .padding(0.1)
+    .padding(0.1);
+
+    // Note: DATA_1.map( dp => dp.region ) returns an array of country names
 
 const yScale = d3.scaleLinear()
     .domain([0, 15])
-    .range([200, 0])
+    .range([200, 0]);
 
 
 const container2 = d3.select('.svg2')
-    .classed('container', true)
+    .classed('container', true);
 
 const bars2 = container2
     .selectAll('.bar')
@@ -49,7 +52,7 @@ const bars2 = container2
     .attr('width', xScale.bandwidth())
     .attr('height', dt => 200 - yScale(dt.value))
     .attr('x', dt => xScale(dt.region))
-    .attr('y', dt => yScale(dt.value))
+    .attr('y', dt => yScale(dt.value));
 
 setTimeout( () => {
     bars2

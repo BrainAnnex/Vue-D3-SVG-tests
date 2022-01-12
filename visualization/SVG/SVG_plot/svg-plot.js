@@ -7,7 +7,7 @@
 class SVGplot
 /* 	Low-level plotting class, specific to the SVG language.
 
-	All coordinates are screen-coordinate integers (origin at top/left; y-axis pointing down)
+	All coordinates are screen-coordinate integers (origin at top/left; x-axis point right; y-axis pointing DOWN)
 
 	Screen coordinates referred to as:  (Sx, Sy)
  */
@@ -17,31 +17,99 @@ class SVGplot
     {
         this.svg = "";			// The SVG code (XML text string), representing the overall plot being built up
 
-        this.svg = `<svg viewBox='0 0 ${plot_width} ${plot_height}' xmlns='http://www.w3.org/2000/svg'>\n`;
+         //this.add_SVG_code(`<svg viewBox='0 0 ${plot_width} ${plot_height}' xmlns='http://www.w3.org/2000/svg'>`);
+         this.add_SVG_code(`<svg width='${plot_width}' height='${plot_height}'>`);
         // Need the "xmlns" part to prevent the program "SVG-edit" from complaining
 
         return this;
     }
 
 
-    add_point(Sx, Sy, r, color)
+
+    /*
+        SHAPES
+     */
+
+    add_point(Sx, Sy, r = 2, color = 'black')
     // Add a point, with the specified coordinates, radius, and color
     {
-        this.svg += `<circle cx='${Sx}' cy='${Sy}' r='${r}' stroke='${color}' stroke-width='1' />\n`;
+         this.add_SVG_code(`<circle cx='${Sx}' cy='${Sy}' r='${r}' stroke='${color}' stroke-width='1'  fill='black'/>`);
 
         //console.log(this.svg);
         return this;
     }
 
 
-    add_line(Sx1, Sy1, Sx2, Sy2)
+    add_line(Sx1, Sy1, Sx2, Sy2, color = "black", styleOptions = "stroke-width='1'")
 	/* 	Add to the current plot a line (segment) between the two specified points: (Sx1, Sy1) and (Sx2, $y2)
+	    Color and  Styling options will be applied if provided
 	 */
 	{
-		this.svg += `<line x1='${Sx1}' y1='${Sy1}' x2='${Sx2}' y2='${Sy2}' stroke='black' />\n`;
+		 this.add_SVG_code(`<line x1='${Sx1}' y1='${Sy1}' x2='${Sx2}' y2='${Sy2}' stroke='${color}' ${styleOptions}/>`);
 
 		return this;
 	}
+
+
+	add_rectangle(x, y, width, height, class_name = "")
+	// (x, y) is the coordinate of the left-top corner
+    {
+        //const Swidth = Sx2 - Sx1;
+        //const SyTop = SyBase - height;
+
+        this.add_SVG_code(`<rect x='${x}' y='${y}' width='${width}' height='${height}' fill='none' stroke='black'  class='${class_name}'/>`);
+
+		return this;
+    }
+
+	add_rectangle_old(Sx1, Sx2, SyBase, height = 45)
+    {
+        const Swidth = Sx2 - Sx1;
+        const SyTop = SyBase - height;
+
+        this.add_SVG_code(`<rect x='${Sx1}' y='${SyTop}' width='${Swidth}' height='${height}' fill='none' stroke='black' />`);
+        //$this->svg .= "<rect x='$x1' y='$yTop' width='$width' height='$height' fill='rgb(180,180,180)' stroke='none' opacity='0.3'/>\n";
+
+		return this;
+    }
+
+
+    addCircle(Sx, Sy, r = 2)
+    // Add a circle, with the specified coordinates and radius (optional)
+    {
+        this.add_SVG_code(`<circle cx='${Sx}' cy='${Sy}' r='${r}' stroke='gray' fill='none' />`);
+
+		return this;
+    }
+
+    addHalfCircle(Sx, Sy, r = 2)
+    // Add a half circle, open to the left, with the specified coordinates and radius (optional)
+    {
+        const top = Sy - r;
+        const bottom = Sy + r;
+
+        this.add_SVG_code(`<path d='M ${Sx},${top} A ${r},${r} 0 0,1 ${Sx},${bottom}' stroke='gray' fill='none' />`);
+
+		return this;
+    }
+
+
+
+    /*
+        TEXT
+     */
+
+    addText(label, Sx, Sy, color = "black", styleOptions = "")
+    // Add a text label at the specified point
+    {
+        if (styleOptions)
+           this.add_SVG_code(`<text x='${Sx}' y='${Sy}' fill='${color}' ${styleOptions}>${label}</text>`);
+        else
+            this.add_SVG_code(`<text x='${Sx}' y='${Sy}' font-size='8' fill='${color}'>${label}</text>`);
+
+		return this;
+    }
+
 
     // ----------------------------------------------------------------------------
 
@@ -51,9 +119,18 @@ class SVGplot
         this.svg += "</svg>\n";
 
         return this.svg;
+    }
 
-    }  // terminatePlot()
-}
+
+    // ----------------------------------------------------------------------------
+
+    add_SVG_code(SVGcode)
+    // Append the given SVG code to the current plot (the SVG code being built), with a newline suffix for readibility
+    {
+        this.svg += SVGcode + "\n";
+    }
+
+} // class SVGplot
 
 
 

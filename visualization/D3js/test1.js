@@ -1,4 +1,4 @@
-// Non-SVG tests  (just DOM manipulation and CSS)
+// Non-SVG tests  (just DOM manipulation and CSS, using D3.js)
 // Based on https://www.youtube.com/watch?v=TOJ9yjvlapY
 
 d3.select('.div1')
