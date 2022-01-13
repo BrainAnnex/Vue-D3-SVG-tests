@@ -41,7 +41,7 @@ class SVGplot
 
 
     add_line(Sx1, Sy1, Sx2, Sy2, color = "black", styleOptions = "stroke-width='1'")
-	/* 	Add to the current plot a line (segment) between the two specified points: (Sx1, Sy1) and (Sx2, $y2)
+	/* 	Add to the current plot a line (segment) between the two specified points: (Sx1, Sy1) and (Sx2, Sy2)
 	    Color and  Styling options will be applied if provided
 	 */
 	{

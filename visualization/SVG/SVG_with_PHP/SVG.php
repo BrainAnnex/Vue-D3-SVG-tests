@@ -37,7 +37,7 @@ class SVGplot	// TODO: maybe rename EasySVG
 	}
 
 	function addSVGcode($SVGcode)	// TODO: rename to add_SVG_code()
-	// Append the given SVG code to the current plot (the SVG code being built), with a newline suffix for readibility
+	// Append the given SVG code to the current plot (the SVG code being built), with a newline suffix for readability
 	{
 		$this->svg .= $SVGcode . "\n";
 	}
@@ -126,11 +126,12 @@ class SVGplot	// TODO: maybe rename EasySVG
 
 
 	function addHorizontalAxis($SxMin, $SxMax, $Y)
-	/*	Add a horizontal x-axis line to the plot, at the specified y-coordinate, spanning the indicating range of x-coordinates.
-		Preceed the SVG tag by a comment pointing out the new graph (TODO: move commenting to a separate method)
+	/*	Add a horizontal x-axis line to the plot, at the specified y-coordinate,
+	    spanning the indicating range of x-coordinates.
+		Precede the SVG tag by a comment pointing out the new graph (TODO: move commenting to a separate method)
 	*/
 	{
-		// Horizontal axis line, preceeded by a comment
+		// Horizontal axis line, preceded by a comment
 		$this->svg .= "<!-- NEW GRAPH -->\n<line x1='$SxMin' y1='$Y' x2='$SxMax' y2='$Y' style='stroke:black' />\n";
 
 	}  // addHorizontalAxis()
