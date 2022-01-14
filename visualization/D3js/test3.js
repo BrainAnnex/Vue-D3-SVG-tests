@@ -1,4 +1,4 @@
-// Bar graphs and a checkbox UI, all handled by D3.js
+// Bar graphs and a CHECKBOX UI, all handled by D3.js
 // Based on https://www.youtube.com/watch?v=aHJCt2adSWA
 
 const DATA_1 = [

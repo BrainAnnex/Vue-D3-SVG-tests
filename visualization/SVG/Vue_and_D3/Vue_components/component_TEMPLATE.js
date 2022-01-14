@@ -21,6 +21,10 @@ Vue.component('vue-name',
         },  // data
 
 
+        mounted() {
+            console.log("The component is now mounted");
+        },
+
         // ---------------------------  COMPUTED  ---------------------------
         computed: {
 

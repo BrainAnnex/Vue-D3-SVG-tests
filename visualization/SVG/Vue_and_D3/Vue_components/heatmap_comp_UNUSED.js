@@ -7,13 +7,13 @@ Vue.component('vue-heatmap-a',
          */
 
         template: `
-            <!-- Outer container box, serving as Vue-required template root  -->
+            <!-- Outer container, serving as Vue-required template root  -->
             <svg width='450' height='450'>
                 <rect x="0" y="195" width="130" height="195" style="fill: rgb(211, 233, 228)"></rect>
                 <g opacity="1" transform="translate(65,0)">
                     <text y="9" dy="0.71em">HELLO</text>
                 </g>
-            </svg>		<!-- End of outer container box -->
+            </svg>		<!-- End of outer container -->
             `,
 
 
