@@ -39,7 +39,7 @@ class SVGhelper
 			return "<g $attributes>\n";
 	}
 
-	function end_group()
+	end_group()
 	// A SVG end tag for a group of graphic elements
 	{
 		return "</g>\n";
@@ -121,11 +121,22 @@ class SVGhelper
         AXES
      */
 
+    axis_test( {Sxmin, Sxmax, Sy_axis, color="gray"} )
+    // test
+    {
+        //return this.line(Sxmin, Sy, Sxmax, Sy, "brown");
+
+        // Horizontal axis line
+        var svg = this.line(Sxmin, Sy_axis, Sxmax, Sy_axis, color = color);
+        return svg;
+    }
+
+
     axis_bottom({   xmin,
                     xmax,
                     y,
                     color = "black",
-                    dx_tick,
+                    dx_tick = 5,
                     label_frequency = 1,
                     x_map,
                     y_map
@@ -139,10 +150,8 @@ class SVGhelper
         const Sxmax = x_map(xmax);
         const Sy_axis = y_map(y);
 
-        const dx_tick = 5;			// Spacing between tacks on horizontal axis (in plot coordinates)
-
         // Horizontal axis line
-        var svg = this.line(Sxmin, Sy, Sxmax, Sy_axis, color = color);
+        var svg = this.line(Sxmin, Sy_axis, Sxmax, Sy_axis, color = color);
 
         /* First pass for the ticks (kept together as an SVG group)
          */

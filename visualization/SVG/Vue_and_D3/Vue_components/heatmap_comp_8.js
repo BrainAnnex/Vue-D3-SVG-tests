@@ -1,13 +1,7 @@
-Vue.component('vue-heatmap-7',
+Vue.component('vue-heatmap-8',
     /*  A heatmap.
 
-        Compared to 'vue-heatmap-6', most of the plot (except the axes) is done
-        in the SVG plot in the Vue template, using Vue iteration over the rectangles
-        and computations of plot parameters with D3 functions.
-
-        The axes remain a DOM manipulation directly done by D3, and require special
-        handling to be reactive to changes in the data (while the Vue-controlled part
-        is automatically reactive.)
+        Compared to 'vue-heatmap-7', TBA
      */
     {
         props: ['my_groups', 'my_vars', 'my_data', 'outer_width', 'outer_height', 'margins'],
@@ -17,7 +11,7 @@ Vue.component('vue-heatmap-7',
         template: `
             <!-- Outer container, serving as Vue-required template root  -->
             <svg v-bind:width="outer_width" v-bind:height="outer_height" class="chart-holder">
-                <g v-bind:transform="'translate(' + margins.left + ',' + margins.top + ')'">
+                <g v-bind:transform="translate(margins.left, margins.top)">
 
                     <g class="heatmap">
                         <rect v-for="(item, index) in my_data"
@@ -29,10 +23,24 @@ Vue.component('vue-heatmap-7',
                         </rect>
                     </g>
 
+                    <g class="test">
+                        <line x1='0' y1='111' x2='390' y2='111' stroke='red'/>
+                        <line x1='0' y1='140' x2='390' y2='140' stroke='purple'/>
+                    </g>
+
+                    <g class="x-axis-test-1" v-html="foo(0, 150, 390, 150)">
+                    </g>
+
+                    <g class="x-axis-test-2" v-html="this.svg_helper.line(0, 230, 390, 230, 'blue')">
+                    </g>
+
+                    <g class="x-axis-test-1" v-html="X_axis">
+                    </g>
+
                     <g id="chart_axes">
                         <!-- D3 WILL INSERT ITS CODE HERE for the chart axes -->
                     </g>
-
+                    
                 </g>
             </svg>
             <!-- End of outer container -->
@@ -41,6 +49,7 @@ Vue.component('vue-heatmap-7',
 
         data: function() {
             return {
+                svg_helper: new SVGhelper()
             }
         }, // data
 
@@ -50,42 +59,24 @@ Vue.component('vue-heatmap-7',
             /* Note: the "mounted" Vue hook is invoked later in the process of launching this component;
                      waiting this late is needed to make sure that the 'my_svg_element' SVG element is present in the DOM
              */
-            console.log("The `vue-heatmap-7` component has been mounted");
+            console.log("The `vue-heatmap-8` component has been mounted");
 
             this.create_axes();
+
+            //this.svg_helper = new SVGhelper();
         },
 
-
-        watch: {    // NOTE: special actions are needed for data reactivity with the axes (directly handled by D3);
-                    //       by contrast, data reactivity with the heatmap itself (the rectangles) is automatically
-                    //       taken care of by Vue
-            outer_width()  {
-                console.log("The prop `outer_width` has changed inside the component `vue-heatmap-7`");
-                this.create_axes();
-            },
-
-            outer_height()  {
-                console.log("The prop `outer_height` has changed inside the component `vue-heatmap-7`");
-                this.create_axes();
-            },
-
-            margins()  {
-                console.log("The prop `margins` has changed inside the component `vue-heatmap-7`");
-                this.create_axes();
-            }
-
-        },  // watch
 
 
         // ---------------------------  COMPUTED  ---------------------------
         computed: {     // NOTE: computed methods are only invoked AS NEEDED
 
-            width()
+            plot_width()
             {
                 return this.outer_width - this.margins.left - this.margins.right;
             },
 
-            height()
+            plot_height()
             {
                 return this.outer_height - this.margins.top - this.margins.bottom;
             },
@@ -99,7 +90,7 @@ Vue.component('vue-heatmap-7',
             {
                 const f = d3.scaleBand()
                             .domain(this.my_groups)
-                            .range([ 0, this.width ]);     // f is a function
+                            .range([ 0, this.plot_width ]);     // f is a function
                 return f;
             },
 
@@ -111,7 +102,7 @@ Vue.component('vue-heatmap-7',
             {
                 const f = d3.scaleBand()
                             .domain(this.my_vars)
-                            .range([ this.height, 0 ]);   // f is a function
+                            .range([ this.plot_height, 0 ]);   // f is a function
                 return f;
             },
 
@@ -137,6 +128,18 @@ Vue.component('vue-heatmap-7',
             rect_h()
             {
                 return this.y_scale_func.bandwidth();
+            },
+
+            X_axis()
+            // Return the SVG code to produce an x-axis
+            {
+                return this.svg_helper.axis_test(
+                            {Sxmin: 0, Sxmax: this.plot_width,
+                             Sy_axis: 260,
+                             color: "brown"
+                            }
+                        );
+               // return this.svg_helper.line(0, 260, 390, 260, "brown");
             }
 
         },  // COMPUTED
@@ -144,6 +147,20 @@ Vue.component('vue-heatmap-7',
 
         // ---------------------------  METHODS  ---------------------------
         methods: {
+
+            foo(Sx1, Sy1, Sx2, Sy2)
+            {
+                //return "<line x1='0' y1='150' x2='390' y2='150' stroke='green'/>";
+                return this.svg_helper.line(Sx1, Sy1, Sx2, Sy2, "yellow");
+            },
+
+            translate(x, y)
+            /*  Return a string suitable as an SVG attribute, to indicate a translation by <x,y>
+                EXAMPLE:   "translate(10, 50)"
+             */
+            {
+                return `translate(${x}, ${y})`;
+            },
 
             rect_x(item)
             {
@@ -178,7 +195,7 @@ Vue.component('vue-heatmap-7',
 
                 // Build the X axis.  The translation is to place it below the plot
                 axes.append("g")
-                     .attr("transform", `translate(0, ${this.height})`)
+                     .attr("transform", `translate(0, ${this.plot_height})`)
                      .call(d3.axisBottom(this.x_scale_func));
 
                 // Build Y axis
