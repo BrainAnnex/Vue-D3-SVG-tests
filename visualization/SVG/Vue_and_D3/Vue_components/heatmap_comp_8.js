@@ -14,6 +14,7 @@ Vue.component('vue-heatmap-8',
             <svg v-bind:width="outer_width" v-bind:height="outer_height" class="chart-holder">
                 <g v-bind:transform="translate(margins.left, margins.top)">
 
+                    <!-- The main part of the heatmap (a series of rectangles) -->
                     <g class="heatmap">
                         <rect v-for="(item, index) in my_data"
                             v-bind:key="index"
@@ -24,20 +25,27 @@ Vue.component('vue-heatmap-8',
                         </rect>
                     </g>
 
+
+                    <!-- Demo 3 different ways to insert a line in the plot (no CSS used) -->
                     <g class="vertical-separator">
-                        <line x1='0' v-bind:y1='plot_height / 2' x2='390' v-bind:y2='plot_height / 2' stroke='red'/>
+                        <line x1='0' v-bind:y1='plot_height/2'
+                         v-bind:x2='plot_width' v-bind:y2='plot_height/2' stroke='red'/>
                     </g>
 
-                    <g class="x-axis-test-2" v-html="this.svg_helper.line(0, 230, 390, 230, 'blue')">
+                    <g class="top-line" v-html="top_line">
                     </g>
 
+                    <g class="right-line" v-html="this.svg_helper.line(plot_width, 0, plot_width, plot_height, 'purple')">
+                    </g>
+
+
+                    <!-- Add the axes (they make use of CSS) -->
                     <g class="horiz-axis" v-html="X_axis">
                     </g>
 
-                    <g id="chart_axes">
-                        <!-- D3 WILL INSERT ITS CODE HERE for the chart axes -->
+                    <g class="vert-axis" v-html="Y_axis">
                     </g>
-                    
+
                 </g>
             </svg>
             <!-- End of outer container -->
@@ -49,17 +57,6 @@ Vue.component('vue-heatmap-8',
                 svg_helper: new SVGhelper()
             }
         }, // data
-
-
-
-        mounted() {
-            /* Note: the "mounted" Vue hook is invoked later in the process of launching this component;
-                     waiting this late is needed to make sure that the 'my_svg_element' SVG element is present in the DOM
-             */
-            console.log("The `vue-heatmap-8` component has been mounted");
-
-            this.create_axes();
-        },
 
 
 
@@ -125,10 +122,16 @@ Vue.component('vue-heatmap-8',
                 return this.y_scale_func.bandwidth();
             },
 
+            top_line()
+            // Return the SVG code to produce a line at the top of the graph
+            {
+                return this.svg_helper.line(0, 0, this.plot_width, 0, "blue");
+            },
+
             X_axis()
             // Return the SVG code to produce an x-axis
             {
-                return this.svg_helper.axis_bottom_from_scale(
+                return this.svg_helper.axis_bottom(
                             {x_scale_func: this.x_scale_func,
                              Sy_axis: this.plot_height,
                              categorical_labels: this.my_groups
@@ -136,14 +139,24 @@ Vue.component('vue-heatmap-8',
                         );
                 /*
                 // Alternative that doesn't use the x scale function
-                return this.svg_helper.axis_bottom(
+                return this.svg_helper.axis_bottom_without_scale(
                             {Sxmin: 0, Sxmax: this.plot_width,
                              Sy_axis: this.plot_height,
                              categorical_labels: this.my_groups
                             }
                         );
                 */
+            },
 
+            Y_axis()
+            // Return the SVG code to produce a y-axis
+            {
+                return this.svg_helper.axis_left(
+                            {y_scale_func: this.y_scale_func,
+                             Sx_axis: 0,
+                             categorical_labels: this.my_vars
+                            }
+                        );
             }
 
         },  // COMPUTED
@@ -161,41 +174,24 @@ Vue.component('vue-heatmap-8',
             },
 
             rect_x(item)
+            // Return a number for the left x-coordinate of the heatmap rectangle
             {
                 return this.x_scale_func(item.group);
             },
+
             rect_y(item)
+            // Return a number for the top y-coordinate of the heatmap rectangle
             {
                 return this.y_scale_func(item.variable);
             },
 
 
             rect_color(item)
+            // Return a string such as "rgb(240, 247, 246)", to be used for a heatmap rectangle
             {
                 var color_func = this.color_scale_func;   // This is a function
                 return color_func(item.value);
-            },
-
-
-            create_axes()
-            /*  Perform DOM manipulation: locate the <G> element with id "chart_axes" in this Vue component,
-                empty out anything already present (to allow for multiple calls to react to changes in data),
-                and insert into it SVG elements to create the 2 plot axes
-             */
-            {
-                // Locate the <G> element with id "chart_axes" in this Vue component
-                const axes = d3.select("#chart_axes");
-
-                axes.selectAll('g').remove();
-
-                /* Insert into it SVG elements to create the 2 plot axes
-                 */
-
-                // Build Y axis
-                axes.append("g")
-                    .call(d3.axisLeft(this.y_scale_func));
-
-            }  // create_axes
+            }
 
         }  // METHODS
 
