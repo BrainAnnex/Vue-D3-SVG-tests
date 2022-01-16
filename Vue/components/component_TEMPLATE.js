@@ -6,10 +6,10 @@ Vue.component('vue-name',
          */
 
         template: `
-            <section>	    <!-- Outer container box, serving as Vue-required template root  -->
+            <section>	    <!-- Outer container, serving as Vue-required template root  -->
 
 
-            </section>		<!-- End of outer container box -->
+            </section>		<!-- End of outer container -->
             `,
 
 
@@ -24,6 +24,7 @@ Vue.component('vue-name',
         mounted() {
             console.log("The component is now mounted");
         },
+
 
         // ---------------------------  COMPUTED  ---------------------------
         computed: {

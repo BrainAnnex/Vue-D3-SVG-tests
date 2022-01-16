@@ -1,5 +1,8 @@
 <?
 /*
+	NOTE:   THIS IS AN OBSOLETE LIBRARY, NO LONGER MAINTAINED.
+	        Parts of it were ported to a JavaScript version, in SVGhelper
+
 	Plots and Graphics with SVG, comprising the following CLASSES:
 
 	    "SVGplot"

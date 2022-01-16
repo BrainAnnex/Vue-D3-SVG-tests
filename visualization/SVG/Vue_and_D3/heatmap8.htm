@@ -1,5 +1,6 @@
 <!-- Simple heatmap with Vue and D3.
-     Similar to heatmap7.htm, but TBA
+     Similar to heatmap7.htm, but , the last direct DOM manipulation has been wrestled out of D3,
+        using a custom replacement for the D3 axes generator (in the SVG_helper library)
 -->
 
 <!DOCTYPE html>
@@ -14,6 +15,20 @@
     <style type="text/css">
         svg.chart-holder {
             border:1px solid cyan;
+        }
+        g.axis-line {
+            stroke: black;
+            stroke-width: 1px;
+        }
+        g.ticks {
+            stroke: grey;
+        }
+        g.tick-labels {
+            fill: grey;
+            font-size: 10px;
+            font-family: sans-serif;
+            text-anchor: middle;
+            transform: translate(0, 1px);   // Increase for larger font sizes
         }
     </style>
 </head>
