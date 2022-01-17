@@ -1,4 +1,4 @@
-// Bar graphs and a CHECKBOX UI, all handled by D3.js
+// Bar graph and a CHECKBOX UI, all handled by D3.js
 // Based on https://www.youtube.com/watch?v=aHJCt2adSWA
 
 const DATA_1 = [
@@ -80,6 +80,10 @@ function render_chart()
 render_chart();
 
 
+
+/* The remainder of the code, below,
+   is to use D3 to implement a checkbox UI
+ */
 
 let unselected_ids = [];
 
