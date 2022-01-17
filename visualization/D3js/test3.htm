@@ -1,71 +1,87 @@
+<!-- Bar graph and a CHECKBOX UI, all handled by D3.js
+     Based on https://www.youtube.com/watch?v=aHJCt2adSWA
+  -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Test 3</title>
     <script src="https://d3js.org/d3.v7.min.js" defer></script>
-    <script src="https://d3js.org/d3-scale.v3.min.js" defer></script>
-    <script src="https://d3js.org/d3-axis.v2.min.js" defer></script>
     <script src="test3.js" defer></script>
 
     <style>
-    html {
-        font-family: sans-serif;
-    }
+        html {
+            font-family: sans-serif;
+        }
 
-    #app {
-        display: flex;
-        margin: 2rem 1rem;
-    }
+        p.header {
+            font-size: 18px;
+            font-weight: bold;
+        }
 
-    #chart {
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-        padding: 1rem;
-    }
+        #app {
+            display: flex;
+            margin: 2rem 1rem;
+        }
 
-    #chart,
-    #data {
-        margin: 0 2rem;
-    }
+        #chart {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+            padding: 1rem;
+        }
 
-    #data ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-    }
+        #chart,
+        #data {
+            margin: 0 2rem;
+        }
 
-    #data li {
-        margin-bottom: 1rem;
-        padding: 1rem;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-        width: 10rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-weight: bold;
-    }
+        #data ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
 
-    .bar {
-       fill: #4f009e;
-    }
+        #data li {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+            width: 10rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+        }
 
-    .label {
-        fill: #4f009e;
-    }
+        .bar {
+           fill: #4f009e;
+        }
+
+        .label {
+            fill: #4f009e;
+        }
     </style>
 
 </head>
 
 <body>
 
+<p class="header">
+    Bar graph and a CHECKBOX UI, all handled by D3.js
+    <br>Based on
+    <a href="https://www.youtube.com/watch?v=aHJCt2adSWA" target="_blank">https://www.youtube.com/watch?v=aHJCt2adSWA</a>
+</p>
+
 <div id="app">
 
     <div id="chart">
-        <svg></svg>
+        <svg>
+            <!-- D3 WILL INSERT SVG CODE HERE for the bar graph -->
+        </svg>
     </div>
 
     <div id="data">
-        <ul></ul>
+        <ul>
+            <!-- D3 WILL INSERT HERE the side legend and checkboxes -->
+        </ul>
     </div>
 
 </div>

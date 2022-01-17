@@ -1,26 +1,18 @@
-<!-- Simple heatmap with Vue and D3.
-     Similar to heatmap6.htm, but most of the plot is now handled directly by Vue,
-     in a template of SVG code using D3 functions to compute its parameters.
-
-     The axes remain a DOM manipulation directly done by D3, and require special
-     handling to be reactive to changes in the data (while the Vue-controlled part
-     is automatically reactive.)
+<!-- Simple heatmap with Vue and D3 libraries.
+     Based on heatmap2.htm, but now in conjunction with a Vue component:
+     all the data for the heatmap is now managed by Vue, and passed to the component,
+     but heatmap is still entirely produced, and inserted into the DOM, by D3
 -->
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Heatmap 7 : Vue with SVG</title>
+    <title>Heatmap 3 : Vue with SVG</title>
 
     <!-- JavaScript -->
-    <script src="Vue2/vue2.js"></script>    <!-- Vue.js (version 2) -->
+    <script src="../Vue2/vue2.js"></script>    <!-- Vue.js (version 2.6) -->
 
-    <style type="text/css">
-        svg.chart-holder {
-            border:1px solid cyan;
-        }
-    </style>
 </head>
 
 <body>
@@ -28,7 +20,7 @@
 
 <div id="vue-root">   <!-- Container for VUE COMPONENT below : ROOT element -->
 
-    <vue-heatmap-7
+    <vue-heatmap-3
             v-bind:my_groups="my_groups"
             v-bind:my_vars="my_vars"
             v-bind:my_data="my_data"
@@ -37,7 +29,7 @@
             v-bind:outer_height="outer_height"
             v-bind:margins="margins"
     >
-    </vue-heatmap-7>
+    </vue-heatmap-3>
 
 </div>	<!--  ~~~~~~~~~~~~~~~~~~~~~  END of Vue root element  ~~~~~~~~~~~~~~~~~~~~~  -->
 
@@ -46,7 +38,7 @@
 <!--
     Vue components (and other JS).  This must appear AFTER the Vue-containing elements
   -->
-<script src="Vue_components/heatmap_comp_7.js"></script>
+<script src="heatmap3_comp.js"></script>
 <script src="https://d3js.org/d3.v7.min.js"></script>
 
 

@@ -1,6 +1,9 @@
-// Bar graph and a CHECKBOX UI, all handled by D3.js
-// Based on https://www.youtube.com/watch?v=aHJCt2adSWA
+/*  Bar graph and a CHECKBOX UI, all handled by D3.js
+    Based on https://www.youtube.com/watch?v=aHJCt2adSWA
+ */
 
+
+// START OF DATA SECTION
 const DATA_1 = [
     {id: 'd1', index: 0, value: 10, region:'USA'},
     {id: 'd2', index: 1, value: 11, region:'Italy'},
@@ -11,11 +14,17 @@ const DATA_1 = [
 
 const MARGINS = {top: 20, bottom: 10};
 const CHART_WIDTH = 600;
+
+// END OF DATA SECTION
+
+
 const CHART_HEIGHT = 400 - MARGINS.top - MARGINS.bottom;
 
 let selected_data = DATA_1;
 
 
+/* Prepare some D3 functions
+ */
 const x_scale = d3.scaleBand()
     .domain(DATA_1.map( dp => dp.region ))
     .rangeRound([0, CHART_WIDTH])
@@ -26,6 +35,9 @@ const y_scale = d3.scaleLinear()
     .range([CHART_HEIGHT, 0]);
 
 
+/* From here below, D3 reaches into the DOM,
+   and directly manipulates it
+ */
 const chart_container = d3
     .select('svg')
     .attr('width', CHART_WIDTH)

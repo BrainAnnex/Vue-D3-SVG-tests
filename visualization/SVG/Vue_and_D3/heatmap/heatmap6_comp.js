@@ -1,9 +1,8 @@
-Vue.component('vue-heatmap-5',
+Vue.component('vue-heatmap-6',
     /*  A heatmap.
 
-        Compared to 'vue-heatmap-4', the creation of the actual heatmap is separated from
-        the creation of the overall graph and axes.
-        Also, a watch is instituted for the prop 'my_data', which changes the heatmap as needed.
+        Compared to 'vue-heatmap-5', Vue takes control of the SVG element (in the Vue template),
+        while D3 handles the CONTENTS of the SVG element
      */
     {
         props: ['my_groups', 'my_vars', 'my_data', 'outer_width', 'outer_height', 'margins'],
@@ -12,11 +11,12 @@ Vue.component('vue-heatmap-5',
 
         template: `
             <!-- Outer container, serving as Vue-required template root  -->
-            <div id="my_dataviz">
+            <svg id="my_svg_element" v-bind:width="outer_width" v-bind:height="outer_height">
 
                 <!-- D3 WILL INSERT ITS CODE HERE -->
 
-            </div>		<!-- End of outer container -->
+            </svg>
+            <!-- End of outer container -->
             `,
 
 
@@ -29,20 +29,18 @@ Vue.component('vue-heatmap-5',
 
         mounted() {
             /* Note: the "mounted" Vue hook is invoked later in the process of launching this component;
-                     waiting this late is needed to make sure that the 'my_dataviz' DIV element is present in the DOM
+                     waiting this late is needed to make sure that the 'my_svg_element' SVG element is present in the DOM
              */
-            console.log("The `vue-heatmap-5` component has been mounted");
+            console.log("The `vue-heatmap-6` component has been mounted");
 
             this.create_plot();
         },
 
 
         watch: {
-            my_data()
-            // Example of watching for changes in props...  but no action is taken
-            {
-                console.log("The prop `my_data` has changed inside the component `vue-heatmap-5`");
-                this.render_heatmap();
+            my_groups()  {
+                console.log("The prop `my_data` has changed inside the component `vue-heatmap-6`");
+                // No action taken for now
             }
         },
 
@@ -88,20 +86,17 @@ Vue.component('vue-heatmap-5',
 
         // ---------------------------  METHODS  ---------------------------
         methods: {
-
+        
             create_plot()
             /*
              */
             {
-                // Insert an svg object into the <DIV> element with id "my_dataviz" in this Vue component
-                //d3.selectAll('svg').remove();     // Attempting a "clean start" gives mixed results
-                const chart_container = d3.select("#my_dataviz")
-                                          .append("svg")
-                                          .attr("width", this.outer_width)
-                                          .attr("height", this.outer_height);
+                // Locate the <SVG> element with id "my_svg_element" in this Vue component
+                const chart_container = d3.select("#my_svg_element");
 
+                // Insert elements into the <SVG> element with id "my_svg_element" in this Vue component
                 const chart = chart_container.append("g")
-                                             .attr("transform", `translate(${this.margins.left},${this.margins.top})`);
+                            .attr("transform", `translate(${this.margins.left},${this.margins.top})`);
 
 
                 var x_scale_func = this.x_scale;   // This is a function
@@ -114,27 +109,12 @@ Vue.component('vue-heatmap-5',
 
                 // Build Y axis
                 chart.append("g")
-                     .call(d3.axisLeft(y_scale_func));
+                    .call(d3.axisLeft(y_scale_func));
 
-                var heatmap = chart.append("g")
-                    .classed('heatmap', true)
-                    .attr("id", "my_heatmap");
-
-                this.render_heatmap();
-
-            },  // create_plot
-
-
-            render_heatmap()
-            {
-                var x_scale_func = this.x_scale;    // This is a function
-                var y_scale_func = this.y_scale;    // This is a function
-                var color_func = this.color_scale;  // This is a function
-
-                var heatmap = d3.select("#my_heatmap");
+                var color_func = this.color_scale;   // This is a function
 
                 // Transform the DOM element with the SVG
-                heatmap.selectAll()
+                chart.selectAll()
                         .data(this.my_data, function(d) {return d.group+':'+d.variable;})
                         .join("rect")
                         .attr("x", function(d) { return x_scale_func(d.group) })
@@ -142,7 +122,8 @@ Vue.component('vue-heatmap-5',
                         .attr("width", x_scale_func.bandwidth() )
                         .attr("height", y_scale_func.bandwidth() )
                         .style("fill", function(d) { return color_func(d.value)} );
-            }
+
+            }  // create_plot
 
         }  // METHODS
 

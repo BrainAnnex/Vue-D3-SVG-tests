@@ -6,7 +6,7 @@ Vue.component('vue-heatmap-4',
 
         Compared to 'vue-heatmap-3', this component
         takes control of computed values and of most functions used by the original D3 code,
-        except for the axes and the DOM manipulation in creating the SVG element.
+        except for the axes.  The DOM manipulation is still being done by D3.
      */
     {
         props: ['my_groups', 'my_vars', 'my_data', 'outer_width', 'outer_height', 'margins'],

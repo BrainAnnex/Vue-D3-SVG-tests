@@ -2,7 +2,8 @@ Vue.component('vue-heatmap-7',
     /*  A heatmap.
 
         Compared to 'vue-heatmap-6', most of the plot (except the axes) is done
-        in the SVG plot in the Vue template, using Vue iteration over the rectangles
+        in the SVG element in the Vue template,
+        using Vue iteration over the heatmap rectangles,
         and computations of plot parameters with D3 functions.
 
         The axes remain a DOM manipulation directly done by D3, and require special

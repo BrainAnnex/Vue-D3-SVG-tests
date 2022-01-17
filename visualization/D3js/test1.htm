@@ -1,3 +1,6 @@
+<!-- Non-SVG tests  (just DOM manipulation and CSS, using D3.js)
+     Based on https://www.youtube.com/watch?v=TOJ9yjvlapY
+  -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +10,11 @@
     <script src="test1.js" defer></script>
 
     <style type="text/css">
+        p.header {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
         div.tests {
             border:1px solid #e0e0e0;
             margin-bottom:10px;
@@ -28,6 +36,12 @@
 
 <body>
 
+<p class="header">
+    Non-SVG tests  (just DOM manipulation and CSS, using D3.js)<br>
+    Based on
+    <a href="https://www.youtube.com/watch?v=TOJ9yjvlapY" target="_blank">https://www.youtube.com/watch?v=TOJ9yjvlapY</a>
+</p>
+
 <div class="div1 tests"></div>
 
 <div class="div2 tests"></div>
@@ -35,6 +49,7 @@
 <div class="div3 tests"></div>
 
 <div class="div4"></div>
+<br>Note: no SVG used for the bars; they're just DIV elements styled with CSS
 
 </body>
 

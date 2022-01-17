@@ -2,6 +2,7 @@ Vue.component('vue-heatmap-3',
     /*  A heatmap.
         Note that this component receives data from its parent, but is NOT reactive:
         the mounted() function gets called once, and that's the end of it!
+        The heatmap is still entirely produced, and inserted into the DOM, by D3
      */
     {
         props: ['my_groups', 'my_vars', 'my_data', 'outer_width', 'outer_height', 'margins'],
@@ -29,7 +30,7 @@ Vue.component('vue-heatmap-3',
             /* Note: the "mounted" Vue hook is invoked later in the process of launching this component;
                      waiting this late is needed to make sure that the 'my_dataviz' DIV element is present in the DOM
              */
-            console.log("the `vue-heatmap-a` component has been mounted");
+            console.log("the `vue-heatmap-3` component has been mounted");
 
             this.create_plot();
         },

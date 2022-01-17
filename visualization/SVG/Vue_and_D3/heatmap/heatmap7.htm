@@ -1,34 +1,25 @@
 <!-- Simple heatmap with Vue and D3.
-     Similar to heatmap7.htm, but , the last direct DOM manipulation has been wrestled out of D3,
-        using a custom replacement for the D3 axes generator (in the SVG_helper library)
+     Similar to heatmap6.htm, but most of the plot is now handled directly by Vue,
+     in an SVG code template using Vue iteration over the heatmap rectangles,
+     and computations of plot parameters with D3 functions.
+
+     The axes remain a DOM manipulation directly done by D3, and require special
+     handling to be reactive to changes in the data (while the Vue-controlled part
+     is automatically reactive.)
 -->
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Heatmap 8 : Vue with SVG</title>
+    <title>Heatmap 7 : Vue with SVG</title>
 
     <!-- JavaScript -->
-    <script src="Vue2/vue2.js"></script>    <!-- Vue.js (version 2) -->
+    <script src="../Vue2/vue2.js"></script>    <!-- Vue.js (version 2.6) -->
 
     <style type="text/css">
         svg.chart-holder {
             border:1px solid cyan;
-        }
-        g.axis-line {
-            stroke: black;
-            stroke-width: 1px;
-        }
-        g.ticks {
-            stroke: grey;
-        }
-        g.tick-labels {
-            fill: grey;
-            font-size: 10px;
-            font-family: sans-serif;
-            text-anchor: middle;
-            transform: translate(0, 1px);   // Increase for larger font sizes
         }
     </style>
 </head>
@@ -38,7 +29,7 @@
 
 <div id="vue-root">   <!-- Container for VUE COMPONENT below : ROOT element -->
 
-    <vue-heatmap-8
+    <vue-heatmap-7
             v-bind:my_groups="my_groups"
             v-bind:my_vars="my_vars"
             v-bind:my_data="my_data"
@@ -47,7 +38,7 @@
             v-bind:outer_height="outer_height"
             v-bind:margins="margins"
     >
-    </vue-heatmap-8>
+    </vue-heatmap-7>
 
 </div>	<!--  ~~~~~~~~~~~~~~~~~~~~~  END of Vue root element  ~~~~~~~~~~~~~~~~~~~~~  -->
 
@@ -56,9 +47,8 @@
 <!--
     Vue components (and other JS).  This must appear AFTER the Vue-containing elements
   -->
-<script src="Vue_components/heatmap_comp_8.js"></script>
+<script src="heatmap7_comp.js"></script>
 <script src="https://d3js.org/d3.v7.min.js"></script>
-<script src="../SVG_helper/svg_helper.js"></script>
 
 
 

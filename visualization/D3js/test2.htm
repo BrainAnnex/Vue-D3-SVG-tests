@@ -1,3 +1,6 @@
+<!-- 2 identical bar graphs, created in different ways using D3.js (without and with the extra library "d3-scale")
+     Based on https://www.youtube.com/watch?v=TOJ9yjvlapY
+  -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,10 +8,14 @@
     <title>Test 2</title>
 
     <script src="https://d3js.org/d3.v7.min.js" defer></script>
-    <script src="https://d3js.org/d3-scale.v3.min.js" defer></script>
     <script src="test2.js" defer></script>
 
     <style type="text/css">
+        p.header {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
         svg.container {
             width: 250px;
             height: 200px;
@@ -23,11 +30,19 @@
 
 <body>
 
+<p class="header">
+    2 identical bar graphs, created in different ways using D3.js (without and with the extra library "d3-scale")
+    <br>Based on
+    <a href="https://www.youtube.com/watch?v=TOJ9yjvlapY" target="_blank">https://www.youtube.com/watch?v=TOJ9yjvlapY</a>
+</p>
+
 <svg class="svg1"></svg>
 
 <br><br>
 
 <svg class="svg2"></svg>
+
+<br>Note: After 5 secs, the last 2 bars will disappear
 
 </body>
 
