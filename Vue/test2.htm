@@ -2,10 +2,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Test 2</title>
+<title>Vue Test 2</title>
 
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-
+<script src="../Vue2_lib/vue2.js"></script>
 
 </head>
 
@@ -15,8 +14,8 @@
   {{ count }}	<!-- Using an Expression -->
   <br><br>
   <!-- Vue Events using directives -->
-  <button v-on:click="count++">+</button>
-  <button @click="count--">-</button>
+  <button v-on:click="count++">+1</button>
+  <button @click="count--">-1</button>
   <button @click="invert">1/x</button>     				<!-- Function with no argument -->
   <button @click="power(2)">x<sup>2</sup></button>  	<!-- Function with argument -->
 </div>

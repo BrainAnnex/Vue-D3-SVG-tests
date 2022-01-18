@@ -1,33 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Test 5</title>
+<title>Vue Test 5</title>
 
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="../Vue2_lib/vue2.js"></script>
 
 <style>
-table {
-	border-collapse: collapse;
-}
-th {
-	border: 1px solid black;
-	background-color:#CCC;
-}
-td {
-	border: 1px solid #BBB;
-	padding:4px;
-}
-td.header {
-	color:white;
-	background-color:#444;
-}
-span.success {
-	color:gray;
-}
-span.failure {
-	color:red;
-	font-weight:bold;
-}
+    table {
+        border-collapse: collapse;
+    }
+    th {
+        border: 1px solid black;
+        background-color:#CCC;
+    }
+    td {
+        border: 1px solid #BBB;
+        padding:4px;
+    }
+    td.header {
+        color:white;
+        background-color:#444;
+    }
+    span.success {
+        color:gray;
+    }
+    span.failure {
+        color:red;
+        font-weight:bold;
+    }
 </style>
 
 
@@ -147,11 +147,9 @@ var app = new Vue({
 
 function contactServer(fieldID, itemType, itemID, value)
 {
-	//alert("About to contact the server");
-	if (fieldID == 2)
-		return false;
-		
-	return true;
+	alert("Contacting the server is NOT implemented.");
+
+	return false;
 }
 </script>
 

@@ -1,6 +1,6 @@
 Vue.component('vue-simple-test-b',
     /*  A bar chart, utilizing SVG code entirely generated programmatically by JavaScript,
-        using my svg-plot.js library
+        using my svg_plot.js library
      */
     {
         props: ['data_1', 'width', 'height'],
@@ -26,7 +26,7 @@ Vue.component('vue-simple-test-b',
         methods: {
         
             create_plot()
-            // Uses my svg-plot.js library to generate the SVG code,
+            // Uses my svg_plot.js library to generate the SVG code,
             // from the data passed in the props
             {
                 let svg_code = new SVGplot(this.width, this.height);

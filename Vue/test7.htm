@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Test 7</title>
+<title>Vue Test 7</title>
 
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="../Vue2_lib/vue2.js"></script>
 
 <style>
-div.sidebox {
-	padding:20px;
-	width:30%;
-	border:1px solid gray;
-	background-color:#EEEEFF;
-}
-div.sidebox_minimized {
-	width:8%;
-	border:1px solid gray;
-	background-color:#EEEEFF;
-}
+    div.sidebox {
+        padding:20px;
+        width:30%;
+        border:1px solid gray;
+        background-color:#EEEEFF;
+    }
+    div.sidebox_minimized {
+        width:8%;
+        border:1px solid gray;
+        background-color:#EEEEFF;
+    }
 </style>
 
 
@@ -28,10 +28,9 @@ div.sidebox_minimized {
 <div id="app">	<!-- Start of Vue container -->
 
 <div v-if="showSidebox" class='sidebox'>
-<button v-on:click="showSidebox = false">Minimize Icon</button>
-<br>
-SOME STUFF<br>
-MORE STUFF
+    <button v-on:click="showSidebox = false">Minimize Icon</button>
+    <p>SOME STUFF</p>
+    <p>MORE STUFF</p>
 </div>
 
 <div v-if="!showSidebox" class='sidebox_minimized'>

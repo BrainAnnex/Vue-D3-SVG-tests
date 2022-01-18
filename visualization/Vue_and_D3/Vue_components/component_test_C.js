@@ -1,4 +1,4 @@
-Vue.component('vue-simple-test-d',
+Vue.component('vue-simple-test-c',
     /*  A bar chart, utilizing SVG code entirely generated programmatically by JavaScript,
         using the "d3-scale" library
      */
@@ -26,7 +26,7 @@ Vue.component('vue-simple-test-d',
         methods: {
         
             create_plot()
-            /* Uses my svg-plot.js library to generate the SVG code,
+            /* Uses my svg_plot.js library to generate the SVG code,
                from the data passed in the props,
                and the "d3-scale" library to convert from real to screen coordinates
              */

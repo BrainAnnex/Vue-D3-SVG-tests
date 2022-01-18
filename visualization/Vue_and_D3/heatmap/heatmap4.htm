@@ -1,36 +1,18 @@
 <!-- Simple heatmap with Vue and D3.
-     Similar to heatmap7.htm, but the last direct DOM manipulation has been wrestled out of D3,
-     using a custom replacement for the D3 axes generator (in the SVG_helper library)
+     Similar to heatmap3.htm, but with a different Vue component that
+     takes control of computed values and of most functions used by the original D3 code,
+     except for the axes.  The DOM manipulation is still being done by D3.
 -->
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Heatmap 8 : Vue with SVG</title>
+    <title>Heatmap 4 : Vue with SVG</title>
 
     <!-- JavaScript -->
-    <script src="../Vue2/vue2.js"></script>    <!-- Vue.js (version 2.6) -->
+    <script src="../../../Vue2_lib/vue2.js"></script>    <!-- Vue.js (version 2) -->
 
-    <style type="text/css">
-        svg.chart-holder {
-            border:1px solid cyan;
-        }
-        g.axis-line {
-            stroke: black;
-            stroke-width: 1px;
-        }
-        g.ticks {
-            stroke: grey;
-        }
-        g.tick-labels {
-            fill: grey;
-            font-size: 10px;
-            font-family: sans-serif;
-            text-anchor: middle;
-            transform: translate(0, 1px);   // Increase for larger font sizes
-        }
-    </style>
 </head>
 
 <body>
@@ -38,7 +20,7 @@
 
 <div id="vue-root">   <!-- Container for VUE COMPONENT below : ROOT element -->
 
-    <vue-heatmap-8
+    <vue-heatmap-4
             v-bind:my_groups="my_groups"
             v-bind:my_vars="my_vars"
             v-bind:my_data="my_data"
@@ -47,7 +29,7 @@
             v-bind:outer_height="outer_height"
             v-bind:margins="margins"
     >
-    </vue-heatmap-8>
+    </vue-heatmap-4>
 
 </div>	<!--  ~~~~~~~~~~~~~~~~~~~~~  END of Vue root element  ~~~~~~~~~~~~~~~~~~~~~  -->
 
@@ -56,9 +38,8 @@
 <!--
     Vue components (and other JS).  This must appear AFTER the Vue-containing elements
   -->
-<script src="heatmap8_comp.js.js"></script>
+<script src="heatmap4_comp.js"></script>
 <script src="https://d3js.org/d3.v7.min.js"></script>
-<script src="../../SVG_helper/svg_helper.js"></script>
 
 
 

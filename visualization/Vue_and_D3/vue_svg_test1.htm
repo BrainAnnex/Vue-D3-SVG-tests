@@ -1,29 +1,31 @@
-<!-- Using Vue to insert the entire SVG code (hardcoded as data) -->
+<!-- Hardwired SVG code with individual Vue parameter substitutions -->
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Vue with VSG test 3</title>
+    <title>Vue with VSG test 1</title>
 
     <!-- JavaScript -->
-    <script src="Vue2/vue2.js"></script>    <!-- Vue.js (version 2) -->
+    <script src="../../Vue2_lib/vue2.js"></script>    <!-- Vue.js (version 2) -->
 </head>
 
 <body>
 
 
-<div id="vue-root">   <!-- Container for VUE COMPONENTS : the ROOT of the components below -->
-    <div v-html="svg_code"></div>
+<div id="vue-root">   <!--Vue root element -->
+    <svg viewBox='0 0 200 400' xmlns='http://www.w3.org/2000/svg'>
+        <circle v-bind:cx='x' v-bind:cy='y' r='2' stroke='green' stroke-width='1' fill="white" />
+    </svg>
 </div>	<!--  ~~~~~~~~~~~~~~~~~~~~~  END of Vue root element  ~~~~~~~~~~~~~~~~~~~~~  -->
 
 
 
 
 <!--
-    Vue components (and other JS).  This must appear AFTER the Vue-containing elements
+    This must appear AFTER the Vue-containing elements
   -->
-<script src="../SVG_plot/svg-plot.js"></script>
+<script src="../SVG/SVG_plot/svg_plot.js"></script>
 
 
 <script>
@@ -34,7 +36,8 @@ new Vue({
     delimiters: ['[[', ']]'] ,  // Changing delimiters: requesting double SQUARE brackets, to avoid interfering with Flask
 
     data: {
-        svg_code: "<svg viewBox='0 0 200 400' xmlns='http://www.w3.org/2000/svg'><circle cx='30' cy='10' r='5' stroke='green' stroke-width='1' /></svg>"
+        x: 30,
+        y: 10
     },
 
 

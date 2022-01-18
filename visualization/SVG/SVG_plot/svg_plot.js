@@ -1,3 +1,21 @@
+/*
+	NOTE:   THIS IS AN OBSOLETE INTERIM LIBRARY, NOT COMPLETED NOR DIRECTLY USED (except in some early tests).
+
+	        Partial port to JavaScript of the old PHP libraries with the same names (in folder "SVG_with_PHP");
+	        this code is not in actual use, but it contributed to the final JavaScript library "SVG_helper" (in active use)
+
+	Plots and Graphics with SVG, comprising the following CLASSES:
+
+	    "SVGplot"
+	    "coordsMapping"
+	    "point"
+	    "plotting"
+
+	Screen coordinates referred to (not yet consistently) as:  (Sx, Sy)
+ */
+
+
+
 /********************************************************************************************************************
 
 		LOW-LEVEL GRAPHICS:  CLASS "SVGplot"
@@ -199,5 +217,3 @@ svg_code = plot
 
 console.log(svg_code);
 */
-
-

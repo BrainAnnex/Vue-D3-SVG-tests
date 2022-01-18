@@ -26,7 +26,7 @@ Vue.component('vue-simple-test-a',
         methods: {
         
             create_plot()
-            // Uses my svg-plot.js library to generate the SVG code,
+            // Uses my svg_plot.js library to generate the SVG code,
             // from the data passed in the props
             {
                 let svg_code = new SVGplot(this.width, this.height);

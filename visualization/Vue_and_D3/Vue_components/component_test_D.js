@@ -1,4 +1,4 @@
-Vue.component('vue-simple-test-c',
+Vue.component('vue-simple-test-d',
     /* A bar chart, utilizing an SVG template,
        with iterations by Vue and parameters with hardwired computations
      */

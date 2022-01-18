@@ -1,22 +1,21 @@
-<!-- Test WITH Vue -->
+<!-- Test WITH Vue (contrast with "complex_without") -->
 <!DOCTYPE html>
 <html>
 <head>
 <title>YES Vue</title>
-<meta charset="iso-8859-1">
 
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="../Vue2_lib/vue2.js"></script>
 
 <style>
-table, th, td {
-  border: 1px solid black;
-}
-table {
-  border-collapse: collapse;
-}
-td {
-	padding:6px;
-}
+        table, th, td {
+          border: 1px solid black;
+        }
+        table {
+          border-collapse: collapse;
+        }
+        td {
+            padding:6px;
+        }
 </style>
 
 </head>
@@ -31,10 +30,10 @@ td {
 <ul>
 	<li v-for='(item, index) in choices'>
     	<span v-if="selection_status[index]" style="color:red">
-        {{item}}
+                {{item}}
         </span>
         <span v-else style="color:black">
-        {{item}}
+                {{item}}
         </span>
         <input v-if="selection_status[index]" v-on:click="clickCheckbox(index)" type="checkbox" checked>
         <input v-else                         v-on:click="clickCheckbox(index)" type="checkbox">
@@ -60,15 +59,14 @@ td {
 
 
 
-
 <script>
 // This Vue instance must appear AFTER the Vue template
 var app = new Vue({
 	el: '#app',
 	
 	data: {
-		choices : ["La", "vispa", "Teresa", "volava", "fra", "l'erbetta", "gentil"],		// Can be accessed in console as:  app.choices
-		selection_status : [false, false, true, false, false, false, false],
+		choices : ["The", "quick", "brown", "fox", "jumps", "over", "the"],		// Can be accessed in console as:  app.choices
+		selection_status : [false, false, true, false, false, false, false],    // For the checkboxes
 		choiceToAdd: null
 	},
 	
@@ -111,7 +109,8 @@ var app = new Vue({
 			/* UPDATE THE MODEL
 			 */
 			this.choices.push(new_value);
-       		this.choiceToAdd = null;
+			this.selection_status.push(false);
+       		this.choiceToAdd = null;            // Clear the input box
 		}
 		
 	}

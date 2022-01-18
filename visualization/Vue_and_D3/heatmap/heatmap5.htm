@@ -1,17 +1,15 @@
 <!-- Simple heatmap with Vue and D3.
-     Similar to heatmap3.htm, but with a different Vue component that
-     takes control of computed values and of most functions used by the original D3 code,
-     except for the axes.  The DOM manipulation is still being done by D3.
+     Similar to heatmap4.htm, but reactive to changes in 'my_data'
 -->
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Heatmap 4 : Vue with SVG</title>
+    <title>Heatmap 5 : Vue with SVG</title>
 
     <!-- JavaScript -->
-    <script src="../Vue2/vue2.js"></script>    <!-- Vue.js (version 2.6) -->
+    <script src="../../../Vue2_lib/vue2.js"></script>    <!-- Vue.js (version 2) -->
 
 </head>
 
@@ -20,7 +18,7 @@
 
 <div id="vue-root">   <!-- Container for VUE COMPONENT below : ROOT element -->
 
-    <vue-heatmap-4
+    <vue-heatmap-5
             v-bind:my_groups="my_groups"
             v-bind:my_vars="my_vars"
             v-bind:my_data="my_data"
@@ -29,7 +27,7 @@
             v-bind:outer_height="outer_height"
             v-bind:margins="margins"
     >
-    </vue-heatmap-4>
+    </vue-heatmap-5>
 
 </div>	<!--  ~~~~~~~~~~~~~~~~~~~~~  END of Vue root element  ~~~~~~~~~~~~~~~~~~~~~  -->
 
@@ -38,7 +36,7 @@
 <!--
     Vue components (and other JS).  This must appear AFTER the Vue-containing elements
   -->
-<script src="heatmap4_comp.js"></script>
+<script src="heatmap5_comp.js"></script>
 <script src="https://d3js.org/d3.v7.min.js"></script>
 
 

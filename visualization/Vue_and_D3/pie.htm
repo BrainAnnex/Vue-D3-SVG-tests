@@ -1,0 +1,67 @@
+<!-- Create a pie chart
+     Loosely based on https://www.youtube.com/watch?v=CkFktv0p3pw
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pie : Vue with SVG</title>
+
+    <!-- JavaScript -->
+    <script src="../../Vue2_lib/vue2.js"></script>    <!-- Vue.js (version 2) -->
+
+    <style type="text/css">
+
+    </style>
+</head>
+
+<body>
+
+
+<div id="vue-root">   <!-- Container for VUE COMPONENTS below : ROOT element -->
+
+    <vue-pie
+            v-bind:pie_slice_values="pie_slice_values"
+
+            v-bind:inner_radius="inner_radius"
+            v-bind:outer_radius="outer_radius"
+            v-bind:corner_radius="corner_radius"
+    >
+    </vue-pie>
+
+</div>	<!--  ~~~~~~~~~~~~~~~~~~~~~  END of Vue root element  ~~~~~~~~~~~~~~~~~~~~~  -->
+
+
+
+<!--
+    Vue components (and other JS).  This must appear AFTER the Vue-containing elements
+  -->
+<script src="Vue_components/pie.js"></script>
+<script src="Vue_components/arc.js"></script>
+
+
+<!--Alternatively, just import https://d3js.org/d3.v7.min.js -->
+<script src="https://cdn.jsdelivr.net/npm/d3-path@3"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3-shape@3"></script>
+
+
+
+<script>
+// Instantiation of the ROOT component must come after the definition of the descendant components
+new Vue({
+    el: '#vue-root',
+
+    data: {
+        pie_slice_values: [50, 25, 20, 5],
+        inner_radius: 0,
+        outer_radius: 150,
+        corner_radius: 2
+    }
+
+});
+</script>
+
+
+</body>
+</html>

@@ -1,9 +1,11 @@
 class SVGhelper
-/* 	Helper function to generate either individual SVG tags, or larger SVG constructs.
+/* 	Helper library to generate either individual SVG tags, or larger SVG constructs.
 
 	All coordinates are screen-coordinate integers (origin at top/left; x-axis point right; y-axis pointing DOWN)
 
-	Screen coordinates referred to as:  (Sx, Sy)
+	Screen coordinates are referred to as:  (Sx, Sy)
+
+	Styling is generally relegated to CSS.
  */
 {
 

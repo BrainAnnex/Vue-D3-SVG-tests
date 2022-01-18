@@ -1,27 +1,24 @@
-<!-- Interactive multipoint star,
-     based on https://ultimatecourses.com/blog/create-data-visualization-chart-vuejs-d3
+<!-- A line chart.
+     Based on https://medium.com/tyrone-tudehope/composing-d3-visualizations-with-vue-js-c65084ccb686
 -->
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Multipoint star : Vue with SVG</title>
+    <title>Line chart : Vue with SVG</title>
 
     <!-- JavaScript -->
-    <script src="Vue2/vue2.js"></script>    <!-- Vue.js (version 2) -->
+    <script src="../../Vue2_lib/vue2.js"></script>    <!-- Vue.js (version 2) -->
 
     <style type="text/css">
-        .range-input {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 10px;
-            width: 500px;
+        svg {
+            margin: 25px;
         }
-
-        input {
-            margin-left: 10px;
+        path {
+            fill: none;
+            stroke: #76BF8A;
+            stroke-width: 3px;
         }
     </style>
 </head>
@@ -31,8 +28,8 @@
 
 <div id="vue-root">   <!-- Container for VUE COMPONENTS below : ROOT element -->
 
-    <vue-multipoint-star>
-    </vue-multipoint-star>
+    <vue-line-chart>
+    </vue-line-chart>
 
 </div>	<!--  ~~~~~~~~~~~~~~~~~~~~~  END of Vue root element  ~~~~~~~~~~~~~~~~~~~~~  -->
 
@@ -41,12 +38,15 @@
 <!--
     Vue components (and other JS).  This must appear AFTER the Vue-containing elements
   -->
-<script src="Vue_components/multipoint_star.js"></script>
+<script src="Vue_components/line_chart.js"></script>
 
-<!--Alternatively, just import https://d3js.org/d3.v7.min.js -->
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<!--
+<script src="https://d3js.org/d3-scale.v3.min.js"></script>
+<script src="https://d3js.org/d3-axis.v2.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/d3-path@3"></script>
 <script src="https://cdn.jsdelivr.net/npm/d3-shape@3"></script>
-
+-->
 
 
 <script>
