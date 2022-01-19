@@ -1,0 +1,157 @@
+<!-- Heatmap, plus a slider UI, with Vue and D3.
+     Very similar to heatmap8.htm, and utilizing the same Vue component,
+     but with the addition of a slider (in the Vue root component in this file)
+     that lets the user adjust the starting bin displayed in the heatmap.
+     The format of the heatmap data has also been changed (and more data hardwired in),
+     but a Vue computed function transforms the data into the old format prior
+     to passing it to the same Vue component
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Heatmap 8 WITH SLIDER : Vue with SVG</title>
+
+    <!-- JavaScript -->
+    <script src="../../../Vue2_lib/vue2.js"></script>    <!-- Vue.js (version 2) -->
+
+    <style type="text/css">
+        svg.chart-holder {
+            border:1px solid cyan;
+        }
+        g.axis-line {
+            stroke: black;
+            stroke-width: 1px;
+        }
+        g.ticks {
+            stroke: grey;
+        }
+        g.tick-labels {
+            fill: grey;
+            font-size: 10px;
+            font-family: sans-serif;
+            text-anchor: middle;
+            transform: translate(0, 1px);   // Increase for larger font sizes
+        }
+    </style>
+</head>
+
+<body>
+
+
+<div id="vue-root">   <!-- Container for VUE COMPONENT below : ROOT element -->
+
+    <vue-heatmap-8
+            v-bind:my_groups="my_groups"
+            v-bind:my_vars="my_vars"
+            v-bind:my_data="my_data"
+
+            v-bind:outer_width="outer_width"
+            v-bind:outer_height="outer_height"
+            v-bind:margins="margins"
+    >
+    </vue-heatmap-8>
+
+    <!--  Slider, to let the user adjust the starting bin displayed in the heatmap -->
+    <div>
+        <label>Start Bin</label>
+        <input type="range" min="1" v-bind:max="number_bins" v-model="start_bin" />
+        <span style="margin-left:10px">{{all_groups[start_bin-1]}}</span>
+
+        <br><br>
+        {{my_data}}     <!--  Show the raw data (in the old format) being passed to the Vue component -->
+        <br><br>
+    </div>
+
+</div>	<!--  ~~~~~~~~~~~~~~~~~~~~~  END of Vue root element  ~~~~~~~~~~~~~~~~~~~~~  -->
+
+
+
+<!--
+    Vue components (and other JS).  This must appear AFTER the Vue-containing elements
+  -->
+<script src="heatmap8_comp.js"></script>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="../../SVG/SVG_helper/svg_helper.js"></script>
+
+
+
+<script>
+// Instantiation of the ROOT component must come after the definition of the descendant components
+var app = new Vue({
+    el: '#vue-root',
+
+    data: {     // THE DATA FOR THE HEATMAP
+
+        // Labels of row and columns
+        all_groups: ["A", "B", "C", "D", "E"],
+        my_vars: ["v1", "v2"],
+
+        // Data for the heatmap
+        heatmap_data: [ [30, 95], [37, 50], [96, 13], [12, 99], [71, 15] ],
+                                                            // each element of heatmap_data is a "group" (column),
+                                                            // listed from bottom up
+
+        // Set the dimensions and margins of the graph
+        outer_width: 450,
+        outer_height: 450,
+        margins: {top: 30, right: 30, bottom: 30, left: 30},
+
+        start_bin: "1"  // The value attribute contains a DOMString which contains a STRING representation of the selected number
+                        // Source:  https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/range
+
+
+    },
+
+    // ---------------------------  COMPUTED  --------------------
+    computed: {
+        number_bins()
+        {
+            return this.heatmap_data.length;
+        },
+
+        my_groups()
+        {
+            let start_index = parseInt(this.start_bin) - 1;
+            return this.all_groups.slice(start_index, this.number_bins + 1);
+        },
+
+        my_data()
+        /* Transform the new data format into the old one.  EXAMPLE of old format:
+                    [
+                        { group: "A", variable: "v1", value: "30" },
+                        { group: "A", variable: "v2", value: "95" },
+                        { group: "B", variable: "v1", value: "37" },
+                        { group: "B", variable: "v2", value: "50" },
+                        { group: "C", variable: "v1", value: "96" },
+                        { group: "C", variable: "v2", value: "13" }
+                    ]
+         */
+        {
+            let result_arr = [];
+            let start_index = parseInt(this.start_bin) - 1;
+            //console.log(start_index);
+            let src_arr = this.heatmap_data.slice(start_index, this.number_bins + 1);
+            //console.log(src_arr);
+
+            for (let group=0 ; group < src_arr.length ; ++group)  {
+                for (let v=0; v < this.my_vars.length ; ++v)  {
+                    let new_element =  { group: this.my_groups[group],
+                                            variable: this.my_vars[v],
+                                            value: src_arr[group][v] };
+                    result_arr.push(new_element);
+                }
+            }
+
+            return result_arr;
+        }
+
+    } // END COMPUTED
+
+});
+</script>
+
+
+</body>
+</html>
