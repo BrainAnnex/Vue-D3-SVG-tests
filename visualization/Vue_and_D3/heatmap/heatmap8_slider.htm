@@ -56,12 +56,10 @@
     <!--  Slider, to let the user adjust the starting bin displayed in the heatmap -->
     <div>
         <label>Start Bin</label>
-        <input type="range" min="1" v-bind:max="number_bins" v-model="start_bin" />
-        <span style="margin-left:10px">{{all_groups[start_bin-1]}}</span>
+        <input type="range" min="0" v-bind:max="number_bins-1" v-model="start_bin" />
+        <span style="margin-left:10px">{{all_groups[start_bin]}}</span>
 
-        <br><br>
-        {{my_data}}     <!--  Show the raw data (in the old format) being passed to the Vue component -->
-        <br><br>
+        <p style="color:grey; font-size:12px">{{my_data}}</p>    <!--  Show the raw data (in the old format) being passed to the Vue component -->
     </div>
 
 </div>	<!--  ~~~~~~~~~~~~~~~~~~~~~  END of Vue root element  ~~~~~~~~~~~~~~~~~~~~~  -->
@@ -98,11 +96,11 @@ var app = new Vue({
         outer_height: 450,
         margins: {top: 30, right: 30, bottom: 30, left: 30},
 
-        start_bin: "1"  // The value attribute contains a DOMString which contains a STRING representation of the selected number
+        start_bin: "0"  // Zero-based index of the desired start bin to use in the heatmap.  Note that this is a string.
+                        // "The value attribute contains a DOMString which contains a STRING representation of the selected number"
                         // Source:  https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/range
-
-
     },
+
 
     // ---------------------------  COMPUTED  --------------------
     computed: {
@@ -112,25 +110,27 @@ var app = new Vue({
         },
 
         my_groups()
+        // The groups being sent to the Vue component will vary as the slider is moved
         {
-            let start_index = parseInt(this.start_bin) - 1;
+            let start_index = parseInt(this.start_bin);
             return this.all_groups.slice(start_index, this.number_bins + 1);
         },
 
         my_data()
-        /* Transform the new data format into the old one.  EXAMPLE of old format:
+        /*  Extract the desired portion of the data, as the slider is moved.
+            Then transform the new data format into the old one, to be able to re-use
+            the same Vue compont to draw the heatmap.
+            EXAMPLE of old format:
                     [
                         { group: "A", variable: "v1", value: "30" },
                         { group: "A", variable: "v2", value: "95" },
                         { group: "B", variable: "v1", value: "37" },
-                        { group: "B", variable: "v2", value: "50" },
-                        { group: "C", variable: "v1", value: "96" },
-                        { group: "C", variable: "v2", value: "13" }
+                        { group: "B", variable: "v2", value: "50" }
                     ]
          */
         {
             let result_arr = [];
-            let start_index = parseInt(this.start_bin) - 1;
+            let start_index = parseInt(this.start_bin);
             //console.log(start_index);
             let src_arr = this.heatmap_data.slice(start_index, this.number_bins + 1);
             //console.log(src_arr);
