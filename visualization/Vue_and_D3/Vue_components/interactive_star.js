@@ -1,4 +1,4 @@
-Vue.component('vue-multipoint-star',
+Vue.component('vue-interactive-star',
     /*  Multipoint star, with a slider to pick how many arms it has.
         Based on https://ultimatecourses.com/blog/create-data-visualization-chart-vuejs-d3
      */
@@ -8,7 +8,7 @@ Vue.component('vue-multipoint-star',
          */
 
         template: `
-            <!-- Outer container box, serving as Vue-required template root  -->
+            <!-- Outer container, serving as Vue-required template root  -->
             <section>
 
                 <svg width="500" height="500">
@@ -27,7 +27,7 @@ Vue.component('vue-multipoint-star',
                 </div>
 
             </section>
-            <!-- End of outer container box -->
+            <!-- End of outer container -->
             `,
 
 

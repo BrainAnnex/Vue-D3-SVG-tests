@@ -7,6 +7,7 @@ Vue.component('vue-heatmap-8',
     {
         props: ['my_groups', 'my_vars', 'my_data', 'outer_width', 'outer_height', 'margins'],
         /*
+            my_data:    array of objects with 3 keys ('group', 'variable' and 'value')
          */
 
         template: `
@@ -113,11 +114,21 @@ Vue.component('vue-heatmap-8',
 
 
             rect_w()
+            /*  Return the width (in pixels) of each rectangle element in the heatmap, based on the previously-set x scale.
+                EXAMPLE, if in the earlier call to x_scale_func(),
+                    the x_labels is a list with 4 elements, and the plot_width is 600,
+                    then rect_w() returns 150
+             */
             {
                 return this.x_scale_func.bandwidth();
             },
 
             rect_h()
+            /*  Return the height (in pixels) of each rectangle element in the heatmap, based on the previously-set y scale.
+                EXAMPLE, in the earlier call to y_scale_func(),
+                    if the y_labels is a list with 2 elements, and the plot_height is 400,
+                    then rect_h() returns 200
+             */
             {
                 return this.y_scale_func.bandwidth();
             },

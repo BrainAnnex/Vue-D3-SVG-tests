@@ -13,6 +13,7 @@ Vue.component('vue-heatmap-7',
     {
         props: ['my_groups', 'my_vars', 'my_data', 'outer_width', 'outer_height', 'margins'],
         /*
+            my_data:    array of objects with 3 keys ('group', 'variable' and 'value')
          */
 
         template: `
